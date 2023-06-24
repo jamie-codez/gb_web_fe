@@ -4,9 +4,9 @@ import Footer from "../../components/Footer";
 
 const Houses = () => {
     return (
-        <div>
+        <div className={"flex"}>
             <SideBar/>
-            <div>
+            <div className={"flex flex-col"}>
                 <NavHeader/>
                 <div>Section</div>
                 <Footer/>

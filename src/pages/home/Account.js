@@ -2,7 +2,7 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 
-const Tasks = () => {
+const Account = () => {
     return (
         <div className={"flex"}>
             <SideBar/>
@@ -15,4 +15,4 @@ const Tasks = () => {
     )
 }
 
-export default Tasks;
+export default Account;
