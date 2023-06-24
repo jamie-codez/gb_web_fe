@@ -1,18 +1,17 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
-import {Table} from "./Dashboard";
+import UserForm from "../../components/UserForm";
+import "../../index.css"
 
-const Houses = () => {
+const Account = () => {
     return (
         <div className={"flex"}>
             <SideBar/>
             <div className={"flex flex-col w-full h-screen"}>
                 <NavHeader/>
-                <div className={"h-full w-full"}>
-                    <div className={"flex flex-col w-full mt-10"}>
-                        <Table/>
-                    </div>
+                <div className={"h-full mr-10 ml-10"}>
+                    <UserForm/>
                 </div>
                 <div className={"align-baseline"}>
                     <Footer/>
@@ -22,4 +21,4 @@ const Houses = () => {
     )
 }
 
-export default Houses;
+export default Account;
