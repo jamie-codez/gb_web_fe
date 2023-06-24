@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 
 const Dashboard = () => {
     return (
-        <div>
+        <div className={"flex"}>
             <SideBar/>
             <div>
                 <NavHeader/>
