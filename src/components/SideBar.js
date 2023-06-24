@@ -37,7 +37,7 @@ const SideBar = () => {
         </Link>
     })
     return (
-        <div className={`${open ? " w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-dark-purple relative`}>
+        <div className={`${open ? " w-72" : "w-20"} duration-300 max-h-full p-5 pt-8 bg-dark-purple relative`}>
             <IoIosArrowBack
                 className={`absolute cursor-pointer bg-white rounded-full ${!open && "rotate-180"} -right-3 top-9 w-7 items-center justify-center pr-0.5 h-7 border-2 border-dark-purple`}
                 onClick={() => setOpen(!open)}/>

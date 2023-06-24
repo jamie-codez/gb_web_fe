@@ -8,8 +8,10 @@ const Tasks = () => {
             <SideBar/>
             <div className={"flex flex-col w-full"}>
                 <NavHeader/>
-                <div>Section</div>
-                <Footer/>
+                <div className={"h-full"}>Section</div>
+                <div className={"align-baseline bg-gray-300"}>
+                    <Footer/>
+                </div>
             </div>
         </div>
     )
