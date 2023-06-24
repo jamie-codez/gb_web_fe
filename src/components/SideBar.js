@@ -16,7 +16,7 @@ import {Link} from "react-router-dom";
 const SideBar = () => {
     const [open, setOpen] = useState(true);
     const menuItems = [
-        {title: "Dashboard", link: "/dashboard/dashboard", icon: <RxDashboard size={20}/>},
+        {title: "Dashboard", link: "/dashboard", icon: <RxDashboard size={20}/>},
         {title: "Users", link: "/dashboard/users", icon: <FiUser size={20}/>, gap: true},
         {title: "Houses", link: "/dashboard/houses", icon: <BsHouses size={20}/>},
         {title: "Tenants", link: "/dashboard/tenants", icon: <PiUsersFour size={25}/>},

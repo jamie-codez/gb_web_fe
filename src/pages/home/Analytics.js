@@ -6,7 +6,7 @@ const Analytics = () => {
     return (
         <div className={"flex"}>
             <SideBar/>
-            <div className={"flex flex-col"}>
+            <div className={"flex flex-col w-full"}>
                 <NavHeader/>
                 <div>Section</div>
                 <Footer/>
