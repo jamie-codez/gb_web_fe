@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import {AiOutlineSearch} from "react-icons/ai";
 import logo from "../assets/logo.png";
 import {IoIosNotificationsOutline, IoIosSettings} from "react-icons/io";
 import {IoLanguageOutline} from "react-icons/io5";
+import {Link} from "react-router-dom";
 
 const SearchComponent = () => {
     return (
@@ -20,16 +21,38 @@ const SearchComponent = () => {
     )
 }
 
+const list = [
+    {name: "Account", link: ""},
+    {name: "Notifications", link: ""},
+    {name: "Logout", link: ""},
+]
+
+const listMap = list.map((item, index) => {
+    return (
+        <div className={"p-2 hover:bg-purple-300 cursor-pointer"}>
+            <h3>{item.name}</h3>
+        </div>
+    )
+})
+
 const ControlsComponent = () => {
+    const [open, setIsOpen] = useState(false);
     return (
         <div className={"flex flex-row space-x-10 items-center"}>
             <div className={"flex flex-row gap-x-2"}>
-                <IoIosNotificationsOutline size={25}/>
+                <Link to={"/dashboard/communications"}><IoIosNotificationsOutline size={25}/></Link>
                 <IoIosSettings size={25}/>
                 <IoLanguageOutline size={25}/>
             </div>
-            <div className={"rounded-full border-2 border-gray-500 ml-20"}>
-                <img className={"h-10 w-10"} src={logo} alt={"profile_pic"}/>
+            <div className={"relative  flex flex-col"}>
+                <img className={"rounded-full border-2 border-gray-500 ml-20 h-10 w-10 text-white hover:bg-blue-800"}
+                     src={logo}
+                     alt={"profile_pic"} onClick={() => setIsOpen((prev) => !prev)}/>
+                {open && (
+                    <div className={"bg-gray-400 absolute top-12 rounded-l rounded-r"}>
+                        {listMap}
+                    </div>
+                )}
             </div>
         </div>
     )

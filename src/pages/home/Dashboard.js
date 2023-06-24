@@ -2,12 +2,14 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import logo from "../../assets/logo.png";
+import "../../index.css";
 import {Link} from "react-router-dom";
+import React from "react";
 
 
-const Table = () => {
+export const Table = () => {
     return (
-        <div>
+        <div className={"table"}>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -30,7 +32,7 @@ const Table = () => {
                     <th scope="row"
                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                         <img className="w-10 h-10 rounded-full" src={logo}
-                             alt="Jese image"/>
+                             alt="Jese"/>
                         <div className="pl-3">
                             <div className="text-base font-semibold">Neil Sims</div>
                             <div className="font-normal text-gray-500">neil.sims@flowbite.com</div>
@@ -54,7 +56,7 @@ const Table = () => {
                     <th scope="row"
                         className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img className="w-10 h-10 rounded-full" src={logo}
-                             alt="Jese image"/>
+                             alt="Jese"/>
                         <div className="pl-3">
                             <div className="text-base font-semibold">Bonnie Green</div>
                             <div className="font-normal text-gray-500">bonnie@flowbite.com</div>
@@ -78,7 +80,7 @@ const Table = () => {
                     <th scope="row"
                         className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img className="w-10 h-10 rounded-full" src={logo}
-                             alt="Jese image"/>
+                             alt="Jese"/>
                         <div className="pl-3">
                             <div className="text-base font-semibold">Jese Leos</div>
                             <div className="font-normal text-gray-500">jese@flowbite.com</div>
@@ -102,7 +104,7 @@ const Table = () => {
                     <th scope="row"
                         className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img className="w-10 h-10 rounded-full" src={logo}
-                             alt="Jese image"/>
+                             alt="Jese"/>
                         <div className="pl-3">
                             <div className="text-base font-semibold">Thomas Lean</div>
                             <div className="font-normal text-gray-500">thomes@flowbite.com</div>
@@ -126,7 +128,7 @@ const Table = () => {
                     <th scope="row"
                         className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img className="w-10 h-10 rounded-full" src={logo}
-                             alt="Jese image"/>
+                             alt="Jese"/>
                         <div className="pl-3">
                             <div className="text-base font-semibold">Leslie Livingston</div>
                             <div className="font-normal text-gray-500">leslie@flowbite.com</div>
@@ -159,18 +161,18 @@ const Dashboard = () => {
             <SideBar/>
             <div className={"flex flex-col w-full"}>
                 <NavHeader/>
-                <div className={"h-full flex flex-col bg-purple-600 w-full"}>
+                <div className={"h-full flex flex-col w-full"}>
                     <div className={"cards flex flex-row bg-gray-300 ml-10 mr-10 mt-10 h-56 rounded p-5 text-blue-700"}>
                         Charts Section
                     </div>
-                    <hr className="h-px my-8 ml-10 mr-10 bg-gray-200 border-0 dark:bg-gray-700"/>
-                    <div className={"stats flex flex-row pb-10"}>
-                        <div className={"users flex flex-col ml-10 mr-10 rounded mt-3 w-2/4 bg-gray-400"}>
-                            <h3 className={"bg-white"}>Tenants</h3>
+                    <hr className="h-px my-8 ml-10 mr-10 border-0 dark:bg-gray-700"/>
+                    <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
+                        <div className={"users flex flex-col rounded mt-3 w-2/4"}>
+                            <h2 className={"bg-white text-xl ml-5 font-bold"}>Tenants</h2>
                             <Table/>
                         </div>
-                        <div className={"houses flex flex-col ml-10 mr-10 mt-3  rounded w-2/4 bg-gray-400"}>
-                            <h3 className={"bg-white"}>Houses</h3>
+                        <div className={"houses flex flex-col mt-3 rounded w-2/4"}>
+                            <h2 className={"bg-white text-xl ml-5 font-bold"}>Houses</h2>
                             <Table/>
                         </div>
                     </div>
