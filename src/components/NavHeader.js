@@ -22,15 +22,15 @@ const SearchComponent = () => {
 }
 
 const list = [
-    {name: "Account", link: ""},
-    {name: "Notifications", link: ""},
-    {name: "Logout", link: ""},
+    {name: "Account", link: "/dashboard/account"},
+    {name: "Notifications", link: "/dashboard/communications"},
+    {name: "Logout", link: "/login"},
 ]
 
 const listMap = list.map((item, index) => {
     return (
         <div className={"p-2 hover:bg-purple-300 cursor-pointer"}>
-            <h3>{item.name}</h3>
+            <Link to={item.link}><h3>{item.name}</h3></Link>
         </div>
     )
 })
@@ -41,10 +41,10 @@ const ControlsComponent = () => {
         <div className={"flex flex-row space-x-10 items-center"}>
             <div className={"flex flex-row gap-x-2"}>
                 <Link to={"/dashboard/communications"}><IoIosNotificationsOutline size={25}/></Link>
-                <IoIosSettings size={25}/>
+                <Link to={"/dashboard/settings"}><IoIosSettings size={25}/></Link>
                 <IoLanguageOutline size={25}/>
             </div>
-            <div className={"relative  flex flex-col"}>
+            <div className={"relative flex flex-col"}>
                 <img className={"rounded-full border-2 border-gray-500 ml-20 h-10 w-10 text-white hover:bg-blue-800"}
                      src={logo}
                      alt={"profile_pic"} onClick={() => setIsOpen((prev) => !prev)}/>
