@@ -5,6 +5,10 @@ import logo from "../../assets/logo.png";
 import "../../index.css";
 import {Link} from "react-router-dom";
 import React from "react";
+import DashCard from "../../components/DashCard";
+import {PiUsersFour} from "react-icons/pi";
+import {AiFillMessage, AiTwotoneHome} from "react-icons/ai";
+import {BiMoney, BiUser} from "react-icons/bi";
 
 
 export const Table = () => {
@@ -162,8 +166,12 @@ const Dashboard = () => {
             <div className={"flex flex-col w-full"}>
                 <NavHeader/>
                 <div className={"h-full flex flex-col w-full"}>
-                    <div className={"cards flex flex-row bg-gray-300 ml-10 mr-10 mt-10 h-56 rounded p-5 text-blue-700"}>
-                        Charts Section
+                    <div className={"cards flex flex-row space-x-2 ml-10 mr-10 mt-10 h-56 rounded p-5 text-blue-700"}>
+                        <DashCard icon={<PiUsersFour size={70}/>} name={"Tenants"} number={20} background={"bg-blue-300"}/>
+                        <DashCard icon={<AiTwotoneHome size={70}/>} name={"Houses"} number={30} background={"bg-blue-300"}/>
+                        <DashCard icon={<BiMoney size={70}/>} name={"Payments"} number={3440} background={"bg-blue-300"}/>
+                        <DashCard icon={<AiFillMessage size={70}/>} name={"Messages"} number={3440} background={"bg-blue-300"}/>
+                        <DashCard icon={<BiUser size={70}/>} name={"Users"} number={3440} background={"bg-blue-300"}/>
                     </div>
                     <hr className="h-px my-8 ml-10 mr-10 border-0 dark:bg-gray-700"/>
                     <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
