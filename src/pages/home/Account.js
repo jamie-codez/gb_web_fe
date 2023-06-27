@@ -8,7 +8,7 @@ const Account = () => {
     return (
         <div className={"flex"}>
             <SideBar/>
-            <div className={"flex flex-col w-full h-screen"}>
+            <div className={"flex flex-col w-full h-screen max-h-full"}>
                 <NavHeader/>
                 <div className={"h-full mr-10 ml-10 mt-20"}>
                     <UserForm/>

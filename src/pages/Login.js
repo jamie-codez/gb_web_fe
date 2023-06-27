@@ -24,7 +24,7 @@ const Login = () => {
                     swal("Success", response.message, "success", {
                         buttons: false,
                         timer: 2000
-                    }).then(r => {
+                    }).then(() => {
                         localStorage.setItem("accessToken", response.accessToken);
                         localStorage.setItem("refreshToken", response.refreshToken);
                         localStorage.setItem("authenticated", true);
@@ -34,7 +34,7 @@ const Login = () => {
                     swal("Error occurred", response.message, "error", {
                         buttons: true,
                         timer: 2000
-                    }).then(r => {
+                    }).then(() => {
                         console.log(response.message);
                     });
                 }
