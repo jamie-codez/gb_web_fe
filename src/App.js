@@ -10,6 +10,8 @@ import Tasks from "./pages/home/Tasks";
 import Analytics from "./pages/home/Analytics";
 import Account from "./pages/home/Account";
 import Communication from "./pages/home/Communication";
+import Settings from "./pages/home/Settings";
+import NotFound from "./pages/404";
 
 function App() {
     return (
@@ -53,27 +55,10 @@ function App() {
                         </Route>
                         <Route path={"analytics"} element={<Analytics/>}/>
                         <Route path={"account"} element={<Account/>}/>
+                        <Route path={"settings"} element={<Settings/>}/>
                     </Route>
+                    <Route path={"*"} element={<NotFound/>}/>
                 </Routes>
-                {/*    <Routes>*/}
-                {/*        <Route path={"/"} element={<Dashboard/>}/>*/}
-                {/*    </Routes>*/}
-                {/*<Route index={true} path={"/"} element={<Dashboard/>}/>*/}
-                {/*<Route path={"/login"} element={<Login/>}/>*/}
-                {/*<Routes>*/}
-                {/*    <Route index={true} path={"/"} element={<Dashboard/>}/>*/}
-                {/*    <Route path={"/dashboard"} element={<Dashboard/>}/>*/}
-                {/*    <Route path={"/users"} element={<Users/>}/>*/}
-                {/*    <Route path={"/users/:id"} element={<Users/>}/>*/}
-                {/*    <Route path={"/houses"} element={<Houses/>}/>*/}
-                {/*    <Route path={"/tenants"} element={<Tenants/>}/>*/}
-                {/*    <Route path={"/payments"} element={<Payments/>}/>*/}
-                {/*    <Route path={"/communications"} element={<Communications/>}/>*/}
-                {/*    <Route path={"/tasks"} element={<Tasks/>}/>*/}
-                {/*    <Route path={"/analytics"} element={<Analytics/>}/>*/}
-                {/*    <Route path={"/account"} element={<Account/>}/>*/}
-                {/*</Routes>*/}
-                {/*<Dashboard/>*/}
             </BrowserRouter>
         </div>
     );
