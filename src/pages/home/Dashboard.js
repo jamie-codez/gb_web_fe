@@ -3,8 +3,8 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import logo from "../../assets/logo.png";
 import "../../index.css";
-import {Link} from "react-router-dom";
-import React from "react";
+import {Link, Navigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import DashCard from "../../components/DashCard";
 import {PiUsersFour} from "react-icons/pi";
 import {AiFillMessage, AiTwotoneHome} from "react-icons/ai";
@@ -148,7 +148,7 @@ export const Table = () => {
                         </div>
                     </td>
                     <td className="px-6 py-4">
-                        <Link to="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
+                        <Link to="/dashboard/users/userid" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
                             user</Link>
                     </td>
                 </tr>
@@ -158,20 +158,25 @@ export const Table = () => {
     )
 }
 
-
-const Dashboard = () => {
+const Layout = () => {
     return (
         <div className={"flex"}>
             <SideBar/>
             <div className={"flex flex-col w-full"}>
                 <NavHeader/>
                 <div className={"h-full flex flex-col w-full"}>
-                    <div className={"cards flex flex-row space-x-2 ml-10 mr-10 mt-10 h-56 rounded p-5 text-blue-700"}>
-                        <DashCard icon={<PiUsersFour size={70}/>} name={"Tenants"} number={20} background={"bg-blue-300"}/>
-                        <DashCard icon={<AiTwotoneHome size={70}/>} name={"Houses"} number={30} background={"bg-blue-300"}/>
-                        <DashCard icon={<BiMoney size={70}/>} name={"Payments"} number={3440} background={"bg-blue-300"}/>
-                        <DashCard icon={<AiFillMessage size={70}/>} name={"Messages"} number={3440} background={"bg-blue-300"}/>
-                        <DashCard icon={<BiUser size={70}/>} name={"Users"} number={3440} background={"bg-blue-300"}/>
+                    <div
+                        className={"cards flex flex-row space-x-2 ml-10 mr-10 mt-10 h-56 rounded p-5 text-blue-700"}>
+                        <DashCard icon={<PiUsersFour size={70}/>} name={"Tenants"} number={20}
+                                  background={"bg-blue-300"}/>
+                        <DashCard icon={<AiTwotoneHome size={70}/>} name={"Houses"} number={30}
+                                  background={"bg-blue-300"}/>
+                        <DashCard icon={<BiMoney size={70}/>} name={"Payments"} number={3440}
+                                  background={"bg-blue-300"}/>
+                        <DashCard icon={<AiFillMessage size={70}/>} name={"Messages"} number={440}
+                                  background={"bg-blue-300"}/>
+                        <DashCard icon={<BiUser size={70}/>} name={"Users"} number={3440}
+                                  background={"bg-blue-300"}/>
                     </div>
                     <hr className="h-px my-8 ml-10 mr-10 border-0 dark:bg-gray-700"/>
                     <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
@@ -190,7 +195,20 @@ const Dashboard = () => {
                 </div>
             </div>
         </div>
-    )
+    );
+}
+
+
+const Dashboard = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    useEffect(() => {
+            const authed = localStorage.getItem("authenticated");
+            if (authed) {
+                setIsAuthenticated(true)
+            }
+        }, [isAuthenticated]
+    );
+    return <div>{isAuthenticated ? <Layout/> : <Navigate to={"/login"} replace={true}/>}</div>
 }
 
 export default Dashboard;
