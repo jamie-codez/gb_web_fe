@@ -2,8 +2,6 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import "../../index.css"
-import {useEffect, useState} from "react";
-import Login from "../Login";
 
 const Analytics = () => {
     return (
