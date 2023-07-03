@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 import UserForm from "../../components/UserForm";
 import "../../index.css"
 import {useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
+import Login from "../Login";
 
 const Account = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,7 +27,7 @@ const Account = () => {
                         <Footer/>
                     </div>
                 </div>
-            </div> : <Navigate to={"/login"} replace={true}/>}
+            </div> : <Login/>}
         </div>
     )
 }

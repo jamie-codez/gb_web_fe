@@ -1,7 +1,8 @@
 import logo from "../assets/logo.png";
 import {useEffect, useState} from "react";
 import swal from "sweetalert";
-import {Navigate, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import Dashboard from "./home/Dashboard";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -9,9 +10,10 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        setLoading(true)
+        setLoading(true);
         console.log(JSON.stringify({email, password}));
         fetch("http://localhost/login", {
             method: "POST",
@@ -19,38 +21,46 @@ const Login = () => {
                 "content-type": "application/json"
             },
             body: JSON.stringify({email, password})
-        }).then(data => data.json())
-            .then(response => {
-                if ("accessToken" in response) {
-                    swal("Success", response.message, "success", {
+        }).then(async response => await response.json())
+            .then(async data => {
+                if (data.code === 200) {
+                    await swal("Success", data.message, "success", {
                         buttons: false,
                         timer: 2000
                     }).then(() => {
-                        localStorage.setItem("accessToken", response.headers.get("access-token"));
-                        localStorage.setItem("refreshToken", response.headers.get("refresh-token"));
+                        localStorage.setItem("accessToken", data.payload.accessToken);
+                        localStorage.setItem("refreshToken", data.payload.refreshToken);
                         localStorage.setItem("authenticated", true);
                         navigate("/dashboard");
                     });
                 } else {
-                    swal("Error occurred", response.message, "error", {
+                    swal("Error occurred", data.message, "error", {
                         buttons: true,
                         timer: 5000
                     }).then(() => {
-                        console.log(response.message);
+                        console.log(data.message);
                     });
                 }
+            }).catch(error => {
+            swal("Error occurred", error, "error", {
+                buttons: true,
+                timer: 5000
+            }).then(() => {
+                console.log(error);
             });
+        });
         setLoading(false);
     }
+
     useEffect(() => {
         const authenticated = localStorage.getItem("authenticated");
         if (authenticated) {
             setIsAuthenticated(true);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated])
     return (
         <div>
-            {!isAuthenticated ?
+            {isAuthenticated ? <Dashboard/> :
                 <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <img className="mx-auto h-10 w-auto"
@@ -75,8 +85,9 @@ const Login = () => {
                                     <label htmlFor="password"
                                            className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                                     <div className="text-sm">
-                                        <a href="/" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot
-                                            password?</a>
+                                        <Link to="/reset"
+                                              className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot
+                                            password?</Link>
                                     </div>
                                 </div>
                                 <div className="mt-2">
@@ -95,9 +106,10 @@ const Login = () => {
                             </div>
                         </form>
                     </div>
-                </div> : <Navigate to={"/dashboard"} replace={true}/>}
+                </div>
+            }
         </div>
-    )
+    );
 }
 
 export default Login;
