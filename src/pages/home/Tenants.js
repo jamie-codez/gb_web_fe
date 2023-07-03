@@ -2,8 +2,6 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import {useEffect, useState} from "react";
-import Login from "../Login";
 
 const Tenants = () => {
     return (
