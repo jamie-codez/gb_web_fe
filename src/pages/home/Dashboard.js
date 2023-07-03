@@ -3,8 +3,8 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import logo from "../../assets/logo.png";
 import "../../index.css";
-import {Link, Navigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import React from "react";
 import DashCard from "../../components/DashCard";
 import {PiUsersFour} from "react-icons/pi";
 import {AiFillMessage, AiTwotoneHome} from "react-icons/ai";
@@ -148,7 +148,8 @@ export const Table = () => {
                         </div>
                     </td>
                     <td className="px-6 py-4">
-                        <Link to="/dashboard/users/userid" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
+                        <Link to="/dashboard/users/userid"
+                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
                             user</Link>
                     </td>
                 </tr>
@@ -158,7 +159,9 @@ export const Table = () => {
     )
 }
 
-const Layout = () => {
+
+
+const Dashboard = () => {
     return (
         <div className={"flex"}>
             <SideBar/>
@@ -196,19 +199,6 @@ const Layout = () => {
             </div>
         </div>
     );
-}
-
-
-const Dashboard = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    useEffect(() => {
-            const authed = localStorage.getItem("authenticated");
-            if (authed) {
-                setIsAuthenticated(true)
-            }
-        }, [isAuthenticated]
-    );
-    return <div>{isAuthenticated ? <Layout/> : <Navigate to={"/login"} replace={true}/>}</div>
 }
 
 export default Dashboard;
