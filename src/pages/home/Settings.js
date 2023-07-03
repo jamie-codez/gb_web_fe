@@ -3,7 +3,7 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import "../../index.css"
 import {useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
+import Login from "../Login";
 
 const Settings = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,7 +30,7 @@ const Settings = () => {
                             <Footer/>
                         </div>
                     </div>
-                </div> : <Navigate to={"/login"} replace={true}/>
+                </div> : <Login/>
             }
         </div>
     )
