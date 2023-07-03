@@ -156,9 +156,8 @@ export const Table = () => {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
-
 
 
 const Dashboard = () => {
