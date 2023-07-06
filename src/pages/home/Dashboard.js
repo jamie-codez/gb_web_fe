@@ -170,27 +170,28 @@ const Dashboard = ({ auth, ...rest }) => {
     const [tenants, setTenants] = useState([]);
 
     const getUsers = async () => {
-        const response = await axios.get('/api/users');
+        const response = await axios.get('/api/users', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
         setUsers(response.data);
     }
 
     const getHouses = async () => {
-        const response = await axios.get('/api/houses');
+        const response = await axios.get('/api/houses', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
         setHouses(response.data);
     }
 
     const getPayments = async () => {
-        const response = await axios.get('/api/payments');
+        const response = await axios.get('/api/payments', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
         setPayments(response.data);
     }
 
     const getMessages = async () => {
-        const response = await axios.get('/api/messages');
+        const response = await axios.get('/api/messages', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
         setMessages(response.data);
     }
 
     const getTenants = async () => {
-        const response = await axios.get('/api/tenants');
+        const response = await axios.get('/api/tenants',
+            { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
         setTenants(response.data);
     }
 
