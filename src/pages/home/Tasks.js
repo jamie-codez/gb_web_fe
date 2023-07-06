@@ -6,6 +6,16 @@ import {useEffect, useState} from "react";
 import Login from "../Login";
 
 const Tasks = () => {
+    const [tasks,setTasks] = useState([]);
+    const getTasks = async () => {
+        const response = await fetch("http://localhost:5000/tasks");
+        const data = await response.json();
+        setTasks(data);
+    }
+
+    useEffect(() => {
+       getTasks();
+    }, [tasks,setTasks]);
     return (
         <div className={"flex"}>
             <SideBar/>
