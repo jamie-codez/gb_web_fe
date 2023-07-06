@@ -196,11 +196,11 @@ const Dashboard = ({ auth, ...rest }) => {
     }
 
     useEffect(() => {
-        getHouses();
-        getUsers();
-        getPayments();
-        getMessages();
-        getTenants();
+        // getHouses();
+        // getUsers();
+        // getPayments();
+        // getMessages();
+        // getTenants();
     }, [houses, setHouses, users, setUsers, payments, setPayments, messages, setMessages, tenants, setTenants]);
     return (
         <div className={"flex"}>

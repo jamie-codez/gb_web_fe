@@ -1,5 +1,5 @@
 import Dashboard from "./pages/home/Dashboard";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Users from "./pages/home/Users";
 import Houses from "./pages/home/Houses";
@@ -15,6 +15,14 @@ import EmailReset from "./pages/EmailReset";
 import { useEffect, useState } from "react";
 
 
+const ProtectedRoute = ({ isLoggedIn, children }) => {
+    if (!isLoggedIn) {
+        return <Navigate to={"/login"} replace />;
+    }
+    return children;
+}
+
+
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     useEffect(() => {
@@ -28,9 +36,9 @@ function App() {
     return (
         <Routes>
             <Route path={"/login"} element={<Login />} />
-            <Route path={"/"} element={<Dashboard auth={isLoggedIn} />} />
+            <Route path={"/"} element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard /></ProtectedRoute>} />
             <Route path={"/dashboard"}>
-                <Route index={true} element={<Dashboard auth={isLoggedIn} />} />
+                <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard /></ProtectedRoute>} />
                 <Route path={"users"}>
                     <Route index={true} element={<Users />} />
                     <Route path={":id"} element={<Users />} />
