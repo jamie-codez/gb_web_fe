@@ -22,7 +22,7 @@ const Houses = () => {
                 <NavHeader />
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
-                        <Table />
+                        <Table data={houses}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>
