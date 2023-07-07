@@ -30,8 +30,8 @@ export const Row = ({ data }) => {
             </td>
             <td className="px-6 py-4">
                 <div className="flex items-center">
-                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                    {data.verified}
+                    {data.verified ? <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> : <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>}
+                    Verified
                 </div>
             </td>
             <td className="px-6 py-4">
@@ -197,40 +197,71 @@ const Dashboard = ({ auth, ...rest }) => {
     const [payments, setPayments] = useState([]);
     const [messages, setMessages] = useState([]);
     const [tenants, setTenants] = useState([]);
+    const client = axios.create({ baseURL: "http://localhost" })
 
     const getUsers = async () => {
-        const response = await axios.get('/api/users', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
-        setUsers(response.data);
+        const response = await client.get('/users/1',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'access-token': localStorage.getItem('accessToken')
+                }
+            });
+        console.log(response.data);
+        setUsers(response.payload.data);
     }
 
     const getHouses = async () => {
-        const response = await axios.get('/api/houses', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
-        setHouses(response.data);
+        const response = await client.get('/houses/1',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'access-token': localStorage.getItem('accessToken')
+                }
+            });
+        setHouses(response.payload.data);
     }
 
     const getPayments = async () => {
-        const response = await axios.get('/api/payments', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
-        setPayments(response.data);
+        const response = await client.get('/payments/1',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'access-token': localStorage.getItem('accessToken')
+                }
+            });
+        setPayments(response.payload.data);
     }
 
     const getMessages = async () => {
-        const response = await axios.get('/api/messages', { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
-        setMessages(response.data);
+        const response = await client.get('/communications/1',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'access-token': localStorage.getItem('accessToken')
+                },
+            });
+        setMessages(response.payload.data);
     }
 
     const getTenants = async () => {
-        const response = await axios.get('/api/tenants',
-            { headers: { 'Content-Type': 'application/json', 'accessToken': localStorage.getItem('accessToken') } });
-        setTenants(response.data);
+        const response = await client.get('/tenants/1',
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accessToken': localStorage.getItem('access-token')
+                }
+            });
+        setTenants(response.payload.data);
     }
 
     useEffect(() => {
-        // getHouses();
-        // getUsers();
-        // getPayments();
-        // getMessages();
-        // getTenants();
-    }, [houses, setHouses, users, setUsers, payments, setPayments, messages, setMessages, tenants, setTenants]);
+        getHouses();
+        getUsers();
+        getPayments();
+        getMessages();
+        getTenants();
+    }, []);
     return (
         <div className={"flex"}>
             <SideBar />
@@ -254,7 +285,7 @@ const Dashboard = ({ auth, ...rest }) => {
                     <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
                         <div className={"users flex flex-col rounded mt-3 w-2/4"}>
                             <h2 className={"bg-white text-xl ml-5 font-bold"}>Tenants</h2>
-                            <Table data={houses} />
+                            <Table data={tenants} />
                         </div>
                         <div className={"houses flex flex-col mt-3 rounded w-2/4"}>
                             <h2 className={"bg-white text-xl ml-5 font-bold"}>Houses</h2>
