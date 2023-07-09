@@ -9,11 +9,10 @@ const Communications = () => {
     const [communications, setCommunications] = useState([]);
     const client = axios.create({
         baseURL: "http://localhost",
-        headers: {'Content-Type': 'application/json', 'access-token': localStorage.getItem('accessToken')}
+        headers: {'access-token': localStorage.getItem('accessToken')}
     });
     const getCommunications = async () => {
-        const response = await client.get("/communications/1",
-            {});
+        const response = await client.get("/communications/1");
         const data = await response.data;
         setCommunications(data.payload.data);
     }
