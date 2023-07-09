@@ -8,7 +8,7 @@ import axios from "axios";
 const Payments = () => {
     const [payments, setPayments] = useState([]);
     const client = axios.create({
-        baseURL: "https://localhost",
+        baseURL: "http://localhost",
         headers: {"access-token": localStorage.getItem("accessToken")}
     })
     const getPayments = async () => {
