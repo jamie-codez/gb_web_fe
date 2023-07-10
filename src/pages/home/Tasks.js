@@ -6,15 +6,17 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 
 const Tasks = () => {
-    const [tasks,setTasks] = useState([]);
+    const [tasks, setTasks] = useState([]);
+    const client = axios.create({baseURL: "http://localhost"})
     const getTasks = async () => {
-    const response = await axios.get("/api/tasks");
-        setTasks(response.data.tasks);
+        const response = await client.get("/tasks/1");
+        const data = response.data
+        setTasks(data.payload.data);
     }
 
     useEffect(() => {
-       getTasks();
-    }, [tasks,setTasks]);
+        getTasks();
+    }, [tasks, setTasks]);
     return (
         <div className={"flex"}>
             <SideBar/>
@@ -22,6 +24,9 @@ const Tasks = () => {
                 <NavHeader/>
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
+                        <div className={"flex flex-row mt-5 justify-end mr-20"}>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New Task</button>
+                        </div>
                         <Table data={tasks}/>
                     </div>
                 </div>
