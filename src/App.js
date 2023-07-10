@@ -1,11 +1,10 @@
 import Dashboard from "./pages/home/Dashboard";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "./pages/Login";
 import Users from "./pages/home/Users";
 import Houses from "./pages/home/Houses";
 import Tenants from "./pages/home/Tenants";
 import Payments from "./pages/home/Payments";
-import Communications from "./pages/home/Communication";
 import Communication from "./pages/home/Communication";
 import Tasks from "./pages/home/Tasks";
 import Analytics from "./pages/home/Analytics";
@@ -16,60 +15,63 @@ import EmailReset from "./pages/EmailReset";
 import {useEffect, useState} from "react";
 
 
-const AuthElement = ({children}) => {
+const ProtectedRoute = ({isLoggedIn, children}) => {
+    if (!isLoggedIn) {
+        return <Navigate to={"/login"} replace/>;
+    }
+    return children;
+}
+
+
+function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const navigate = useNavigate();
     useEffect(() => {
         const authenticated = localStorage.getItem("authenticated");
         if (authenticated) {
             setIsLoggedIn(true);
-            return <>{children}</>
         } else {
-            return navigate("/login")
+            setIsLoggedIn(false);
         }
-    }, [isLoggedIn,navigate,children])
-}
-
-function App() {
+    }, [isLoggedIn, setIsLoggedIn]);
     return (
         <Routes>
             <Route path={"/login"} element={<Login/>}/>
-            <Route path={"/"} element={<AuthElement><Dashboard/></AuthElement>}/>
+            <Route path={"/"} element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard/></ProtectedRoute>}/>
             <Route path={"/dashboard"}>
-                <Route index={true} element={<AuthElement><Dashboard/></AuthElement>}/>
+                <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard/></ProtectedRoute>}/>
                 <Route path={"users"}>
-                    <Route index={true} element={<AuthElement><Users/></AuthElement>}/>
-                    <Route path={":id"} element={<AuthElement><Users/></AuthElement>}/>
-                    <Route path={"new"} element={<AuthElement><Users/></AuthElement>}/>
+                    <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"houses"}>
-                    <Route index={true} element={<AuthElement><Houses/></AuthElement>}/>
-                    <Route path={":id"} element={<AuthElement><Houses/></AuthElement>}/>
-                    <Route path={"new"} element={<AuthElement><Houses/></AuthElement>}/>
+                    <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"tenants"}>
-                    <Route index={true} element={<AuthElement><Tenants/></AuthElement>}/>
-                    <Route path={":id"} element={<AuthElement><Tenants/></AuthElement>}/>
-                    <Route path={"new"} element={<AuthElement><Tenants/></AuthElement>}/>
+                    <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tenants/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tenants/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tenants/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"payments"}>
-                    <Route index={true} element={<AuthElement><Payments/></AuthElement>}/>
-                    <Route path={":id"} element={<AuthElement><Payments/></AuthElement>}/>
-                    <Route path={"new"} element={<AuthElement><Payments/></AuthElement>}/>
+                    <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Payments/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Payments/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Payments/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"communications"}>
-                    <Route index={true} element={<AuthElement><Communications/></AuthElement>}/>
-                    <Route path={":id"} element={<AuthElement><Communication/></AuthElement>}/>
-                    <Route path={"new"} element={<AuthElement><Communications/></AuthElement>}/>
+                    <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Communication/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Communication/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Communication/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"tasks"}>
-                    <Route index={true} element={<AuthElement><Tasks/></AuthElement>}/>
-                    <Route path={":id"} element={<AuthElement><Tasks/></AuthElement>}/>
-                    <Route path={"new"} element={<AuthElement><Tasks/></AuthElement>}/>
+                    <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tasks/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tasks/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tasks/></ProtectedRoute>}/>
                 </Route>
-                <Route path={"analytics"} element={<AuthElement><Analytics/></AuthElement>}/>
-                <Route path={"account"} element={<AuthElement><Account/></AuthElement>}/>
-                <Route path={"settings"} element={<AuthElement><Settings/></AuthElement>}/>
+                <Route path={"analytics"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Analytics/></ProtectedRoute>}/>
+                <Route path={"account"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Account/></ProtectedRoute>}/>
+                <Route path={"settings"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Settings/></ProtectedRoute>}/>
             </Route>
             <Route path={"/reset"} element={<EmailReset/>}/>
             <Route path={"*"} element={<NotFound/>}/>

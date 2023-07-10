@@ -2,8 +2,23 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
+import {useState, useEffect} from "react";
+import axios from "axios";
 
 const Houses = () => {
+    const [houses, setHouses] = useState([]);
+    const client = axios.create({
+        baseURL: "http://localhost",
+        headers: {'Content-Type': 'application/json', 'access-token': localStorage.getItem('accessToken')}
+    })
+    const getHouses = async () => {
+        const response = await client.get("/houses/1");
+        const data = response.data;
+        setHouses(data.payload.data);
+    }
+    useEffect(() => {
+        getHouses();
+    }, [houses, setHouses]);
     return (
         <div className={"flex"}>
             <SideBar/>
@@ -11,7 +26,10 @@ const Houses = () => {
                 <NavHeader/>
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
-                        <Table/>
+                        <div className={"flex flex-row mt-5 justify-end mr-20"}>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New House</button>
+                        </div>
+                        <Table data={houses}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>
