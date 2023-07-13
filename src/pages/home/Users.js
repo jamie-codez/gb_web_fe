@@ -16,6 +16,7 @@ const Users = () => {
             }
         });
         const data = await response.data;
+        console.log(data.payload)
         setUsers(data.payload.data);
     }
     useEffect(() => {

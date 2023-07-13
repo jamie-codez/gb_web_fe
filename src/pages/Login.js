@@ -31,7 +31,8 @@ const Login = () => {
                         localStorage.setItem("accessToken", data.payload.accessToken);
                         localStorage.setItem("refreshToken", data.payload.refreshToken);
                         localStorage.setItem("authenticated", true);
-                        navigate("/dashboard");
+                        window.location.href = "/dashboard";
+                        // navigate("/dashboard");
                     });
                 } else {
                     swal("Error occurred", data.message, "error", {
