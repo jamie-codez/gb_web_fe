@@ -26,6 +26,20 @@ const Tenants = () => {
         }
     }
 
+    const deleteTenant = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch(`http://localhost/tenants/${id}`, params);
+        if (response.status === 200) {
+            getTenants();
+        }
+    }
+
     const handleAddNewTenantClick = () => {
         navigate("/dashboard/tenants/new")
     }
@@ -45,7 +59,7 @@ const Tenants = () => {
                                     onClick={handleAddNewTenantClick}>Add New Tenant
                             </button>
                         </div>
-                        <Table data={tenants}/>
+                        <Table data={tenants} deleteCallback={deleteTenant}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>

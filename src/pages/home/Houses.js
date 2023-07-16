@@ -9,13 +9,16 @@ import {useNavigate} from "react-router-dom";
 const Houses = () => {
     const navigate = useNavigate();
     const [houses, setHouses] = useState([]);
-    const client = axios.create({
-        baseURL: "http://localhost",
-        headers: {'Content-Type': 'application/json', 'access-token': localStorage.getItem('accessToken')}
-    })
     const getHouses = async () => {
-        const response = await client.get("/houses/1");
-        const data = response.data;
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        }
+        const response = await fetch("http://localhost/houses/1", params);
+        const data = await response.json();
         setHouses(data.payload.data);
     }
     const handleAddNewHouse = () => {

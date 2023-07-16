@@ -9,12 +9,16 @@ import axios from "axios";
 import React, {useState} from "react";
 import DashCard from "../../components/DashCard";
 import {PiUsersFour} from "react-icons/pi";
-import {AiFillMessage, AiTwotoneHome} from "react-icons/ai";
+import {AiFillDelete, AiFillMessage, AiOutlineDelete, AiOutlineEdit, AiTwotoneHome} from "react-icons/ai";
 import {BiMoney, BiUser} from "react-icons/bi";
+import {doGet} from "../../Utils";
+import co from "co";
 
 
-export const Row = ({user}) => {
-    console.log(user)
+export const Row = ({user, deleteCallback}) => {
+    const handleCallback = () => {
+        deleteCallback(user.email);
+    }
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <th scope="row"
@@ -36,16 +40,18 @@ export const Row = ({user}) => {
                     Verified
                 </div>
             </td>
-            <td className="px-6 py-4">
+            <td className="px-6 py-4 flex flex-row items-center justify-center mb-5">
                 <Link to={`/dashboard/users/${user.email}`}
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                    user</Link>
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    <AiOutlineEdit className={"text-blue-500 cursor-pointer w-5 h-5"}/>
+                </Link>
+                <AiOutlineDelete className={"ml-5 text-red-500 cursor-pointer w-5 h-5"} onClick={handleCallback}/>
             </td>
         </tr>
     )
 }
 
-export const Table = ({data}) => {
+export const Table = ({data, deleteCallback}) => {
     return (
         <div className={"table"}>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -66,8 +72,8 @@ export const Table = ({data}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {data.map((userData,index) => {
-                    return <Row user={userData}/>
+                {data.map((userData, index) => {
+                    return <Row user={userData} deleteCallback={deleteCallback}/>
                 })}
                 </tbody>
             </table>
@@ -86,6 +92,7 @@ const Dashboard = ({auth, ...rest}) => {
     const client = axios.create({baseURL: "http://localhost"})
 
     const getUsers = async () => {
+        console.log(users)
         const response = await client.get('/users/1',
             {
                 headers: {
@@ -93,7 +100,6 @@ const Dashboard = ({auth, ...rest}) => {
                     'access-token': localStorage.getItem('accessToken')
                 }
             });
-        // console.log(response.data);
         setUsers(response.data.payload.data);
     }
 
@@ -141,6 +147,67 @@ const Dashboard = ({auth, ...rest}) => {
         setTenants(response.data.payload.data);
     }
 
+    const deleteHouse = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+        const response = await fetch(`http://localhost/houses/${id}`, params);
+        const data = await response.json();
+        if (data.status === 200) {
+            getHouses();
+        }
+    }
+
+    const deletePayment = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+        const response = await fetch(`http://localhost/payments/${id}`, params);
+        const data = await response.json();
+        if (data.status === 200) {
+            getPayments();
+        }
+    }
+
+    const deleteMessage = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+        const response = await fetch(`http://localhost/communications/${id}`, params);
+        const data = await response.json();
+        if (data.status === 200) {
+            getMessages();
+        }
+    }
+
+
+    const deleteUser = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+        const response = await fetch(`http://localhost/users/${id}`, params);
+        const data = await response.json();
+        if (data.status === 200) {
+            getUsers();
+        }
+    }
+
     useEffect(() => {
         getHouses();
         getUsers();
@@ -171,11 +238,11 @@ const Dashboard = ({auth, ...rest}) => {
                     <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
                         <div className={"users flex flex-col rounded mt-3 w-2/4"}>
                             <h2 className={"bg-white text-xl ml-5 font-bold"}>Tenants</h2>
-                            <Table data={users}/>
+                            <Table data={users} deleteCallback={deleteUser}/>
                         </div>
                         <div className={"houses flex flex-col mt-3 rounded w-2/4"}>
                             <h2 className={"bg-white text-xl ml-5 font-bold"}>Houses</h2>
-                            <Table data={houses}/>
+                            <Table data={houses} deleteCallback={deleteHouse()}/>
                         </div>
                     </div>
                 </div>

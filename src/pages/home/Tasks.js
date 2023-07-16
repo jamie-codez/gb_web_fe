@@ -30,6 +30,20 @@ const Tasks = () => {
         navigate("/dashboard/tasks/new");
     }
 
+    const handleDeleteCallback = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "access-token": localStorage.getItem("accessToken"),
+            }
+        }
+        const response = await fetch(`http://localhost/tasks/${id}`, params)
+        if (response.status === 200) {
+            getTasks();
+        }
+    }
+
     useEffect(() => {
         getTasks();
     }, [tasks, setTasks]);
@@ -45,7 +59,7 @@ const Tasks = () => {
                                     onClick={handleAddNewTaskClick}>Add New Task
                             </button>
                         </div>
-                        <Table data={tasks}/>
+                        <Table data={tasks} deleteCallback={handleDeleteCallback}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>

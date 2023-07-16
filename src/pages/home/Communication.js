@@ -18,6 +18,21 @@ const Communications = () => {
         const data = await response.data;
         setCommunications(data.payload.data);
     }
+
+    const handleDeleteCommunication = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "access-token": localStorage.getItem("accessToken"),
+            }
+        }
+        const response = await fetch(`http://localhost/communications/${id}`, params)
+        if (response.status === 200) {
+            getCommunications();
+        }
+    }
+
     const handleAddNewCommunicationClick = () => {
         navigate("/dashboard/communications/new");
     }
@@ -36,7 +51,7 @@ const Communications = () => {
                                     onClick={handleAddNewCommunicationClick}>Add New Communication
                             </button>
                         </div>
-                        <Table data={communications}/>
+                        <Table data={communications} deleteCallback={handleDeleteCommunication}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>
