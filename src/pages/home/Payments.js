@@ -4,6 +4,7 @@ import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import {useState, useEffect} from "react";
 import axios from "axios";
+import {Navigate} from "react-router-dom";
 
 const Payments = () => {
     const [payments, setPayments] = useState([]);
@@ -16,6 +17,11 @@ const Payments = () => {
         const data = response.data
         setPayments(data.payload.data);
     }
+
+    const handleAddNewPaymentClick = () => {
+        return <Navigate to={"/payment/new"} replace={true}/>;
+    }
+
     useEffect(() => {
         getPayments();
     }, [payments, setPayments])
@@ -27,7 +33,9 @@ const Payments = () => {
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
-                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New Payment</button>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}
+                                    onClick={handleAddNewPaymentClick}>Add New Payment
+                            </button>
                         </div>
                         <Table data={payments}/>
                     </div>
