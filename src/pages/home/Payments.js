@@ -4,9 +4,10 @@ import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 
 const Payments = () => {
+    const navigate = useNavigate();
     const [payments, setPayments] = useState([]);
     const client = axios.create({
         baseURL: "http://localhost",
@@ -18,8 +19,8 @@ const Payments = () => {
         setPayments(data.payload.data);
     }
 
-    const handleAddNewPaymentClick = () => {
-        return <Navigate to={"/payment/new"} replace={true}/>;
+    const handleAddNewPaymentClick = (e) => {
+        navigate("dashboard/payment/new");
     }
 
     useEffect(() => {

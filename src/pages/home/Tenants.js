@@ -3,10 +3,11 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import axios from "axios";
-import {useState, useEffect} from "react";
-import {Navigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Tenants = () => {
+    const navigate = useNavigate();
     const [tenants, setTenants] = useState([]);
     const client = axios.create({
         baseURL: "http://localhost",
@@ -19,7 +20,7 @@ const Tenants = () => {
     }
 
     const handleAddNewTenantClick = () => {
-        return <Navigate to={"/tenant/new"} replace={true}/>;
+        navigate("/dashboard/tenant/new")
     }
 
     useEffect(() => {

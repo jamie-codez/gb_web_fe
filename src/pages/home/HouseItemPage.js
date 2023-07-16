@@ -12,7 +12,7 @@ const HouseItemPage = () => {
     const [user, setUsers] = useState({});
     const client = axios.create({baseURL:"http://localhost"})
     const getUser = async () => {
-        const response = await client.get("/users/1");
+        const response = await client.get("/house/1");
         const data = response.data
         setUsers(data.payload.data);
     }

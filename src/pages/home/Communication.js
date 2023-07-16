@@ -2,11 +2,12 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const Communications = ({to, replace, state, relative,}) => {
+const Communications = () => {
+    const navigate = useNavigate();
     const [communications, setCommunications] = useState([]);
     const client = axios.create({
         baseURL: "http://localhost",
@@ -18,7 +19,7 @@ const Communications = ({to, replace, state, relative,}) => {
         setCommunications(data.payload.data);
     }
     const handleAddNewCommunicationClick = () => {
-        return <Navigate to={"/communication/new"} replace={true}/>;
+        navigate("/dashboard/communication/new");
     }
     useEffect(() => {
         getCommunications();

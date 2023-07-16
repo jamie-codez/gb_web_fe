@@ -2,11 +2,12 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Houses = () => {
+    const navigate = useNavigate();
     const [houses, setHouses] = useState([]);
     const client = axios.create({
         baseURL: "http://localhost",
@@ -18,7 +19,7 @@ const Houses = () => {
         setHouses(data.payload.data);
     }
     const handleAddNewHouse = () => {
-        return <Navigate to={"/house/new"} replace={true}/>
+        navigate("/dashboard/houses/new");
     }
     useEffect(() => {
         getHouses();

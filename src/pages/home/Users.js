@@ -4,11 +4,14 @@ import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate, useNavigate} from "react-router-dom";
 
 const Users = () => {
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const client = axios.create({baseURL: "http://localhost"})
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getUsers = async () => {
         const response = await client.get("/users/1", {
             headers: {
@@ -20,11 +23,12 @@ const Users = () => {
         console.log(data.payload)
         setUsers(data.payload.data);
     }
-    const handleAddNewUser = () => {
-        return <Navigate to={"/user/new"} replace={true}/>
+    const handleAddNewUser = (e) => {
+        e.preventDefault();
+        navigate("/dashboard/users/new")
     }
     useEffect(() => {
-        getUsers();
+        getUsers().then(r => console.log(r));
     }, [users, setUsers]);
     return (
         <div className={"flex"}>
@@ -33,9 +37,8 @@ const Users = () => {
                 <NavHeader/>
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
-                        <div className={"flex flex-row mt-5 justify-end mr-20"}>
-                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}
-                                    onClick={handleAddNewUser}>Add New User
+                        <div className={"flex flex-row mt-5 justify-end mr-20"} onClick={handleAddNewUser}>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New User
                             </button>
                         </div>
                         <Table data={users}/>

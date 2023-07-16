@@ -4,9 +4,10 @@ import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Tasks = () => {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
     const client = axios.create({baseURL: "http://localhost"})
     const getTasks = async () => {
@@ -15,7 +16,7 @@ const Tasks = () => {
         setTasks(data.payload.data);
     }
     const handleAddNewTaskClick = () => {
-        return <Navigate to={"/tasks/new"} replace={true}/>
+        navigate("/dashboard/tasks/new");
     }
 
     useEffect(() => {
