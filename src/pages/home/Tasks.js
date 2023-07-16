@@ -11,9 +11,20 @@ const Tasks = () => {
     const [tasks, setTasks] = useState([]);
     const client = axios.create({baseURL: "http://localhost"})
     const getTasks = async () => {
-        const response = await client.get("/tasks/1");
-        const data = response.data
-        setTasks(data.payload.data);
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        }
+        const response = await fetch("http://localhost/tasks/1", params);
+        if (response.status === 200) {
+            const data = await response.json();
+            setTasks(data.payload.data);
+        } else {
+            setTasks([]);
+        }
     }
     const handleAddNewTaskClick = () => {
         navigate("/dashboard/tasks/new");

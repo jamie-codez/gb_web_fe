@@ -46,7 +46,6 @@ export const Row = ({user}) => {
 }
 
 export const Table = ({data}) => {
-    // console.log(data[0])
     return (
         <div className={"table"}>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

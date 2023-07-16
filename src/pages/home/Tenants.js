@@ -2,21 +2,28 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import axios from "axios";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Tenants = () => {
     const navigate = useNavigate();
     const [tenants, setTenants] = useState([]);
-    const client = axios.create({
-        baseURL: "http://localhost",
-        headers: {"access-token": localStorage.getItem("accessToken")}
-    })
+
     const getTenants = async () => {
-        const response = await client.get("/tenants/1");
-        const data = response.data;
-        setTenants(data.payload.data);
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("http://localhost/tenants/1", params);
+        if (response.status === 200) {
+            const data = await response.json();
+            setTenants(data.payload.data);
+        } else {
+            setTenants([]);
+        }
     }
 
     const handleAddNewTenantClick = () => {
