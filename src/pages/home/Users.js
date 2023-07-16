@@ -31,6 +31,20 @@ const Users = () => {
         }
     }
 
+    const deleteUser = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+        const response = await fetch(`http://localhost/users/${id}`, params);
+        if (response.status === 200) {
+            getUsers();
+        }
+    }
+
     const handleAddNewUser = (e) => {
         e.preventDefault();
         navigate("/dashboard/users/new")
@@ -49,7 +63,7 @@ const Users = () => {
                             <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New User
                             </button>
                         </div>
-                        <Table data={users}/>
+                        <Table data={users} deleteCallback={deleteUser}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>
