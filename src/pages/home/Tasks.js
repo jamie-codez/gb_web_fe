@@ -4,14 +4,44 @@ import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Tasks = () => {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
     const client = axios.create({baseURL: "http://localhost"})
     const getTasks = async () => {
-        const response = await client.get("/tasks/1");
-        const data = response.data
-        setTasks(data.payload.data);
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        }
+        const response = await fetch("http://localhost/tasks/1", params);
+        if (response.status === 200) {
+            const data = await response.json();
+            setTasks(data.payload.data);
+        } else {
+            setTasks([]);
+        }
+    }
+    const handleAddNewTaskClick = () => {
+        navigate("/dashboard/tasks/new");
+    }
+
+    const handleDeleteCallback = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                "access-token": localStorage.getItem("accessToken"),
+            }
+        }
+        const response = await fetch(`http://localhost/tasks/${id}`, params)
+        if (response.status === 200) {
+            getTasks();
+        }
     }
 
     useEffect(() => {
@@ -25,9 +55,11 @@ const Tasks = () => {
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
-                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New Task</button>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}
+                                    onClick={handleAddNewTaskClick}>Add New Task
+                            </button>
                         </div>
-                        <Table data={tasks}/>
+                        <Table data={tasks} deleteCallback={handleDeleteCallback}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>

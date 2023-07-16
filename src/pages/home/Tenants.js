@@ -2,19 +2,46 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import axios from "axios";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Tenants = () => {
+    const navigate = useNavigate();
     const [tenants, setTenants] = useState([]);
-    const client = axios.create({
-        baseURL: "http://localhost",
-        headers: {"access-token": localStorage.getItem("accessToken")}
-    })
+
     const getTenants = async () => {
-        const response = await client.get("/tenants/1");
-        const data = response.data;
-        setTenants(data.payload.data);
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch("http://localhost/tenants/1", params);
+        if (response.status === 200) {
+            const data = await response.json();
+            setTenants(data.payload.data);
+        } else {
+            setTenants([]);
+        }
+    }
+
+    const deleteTenant = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch(`http://localhost/tenants/${id}`, params);
+        if (response.status === 200) {
+            getTenants();
+        }
+    }
+
+    const handleAddNewTenantClick = () => {
+        navigate("/dashboard/tenants/new")
     }
 
     useEffect(() => {
@@ -28,9 +55,11 @@ const Tenants = () => {
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
-                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New Tenant</button>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}
+                                    onClick={handleAddNewTenantClick}>Add New Tenant
+                            </button>
                         </div>
-                        <Table data={tenants}/>
+                        <Table data={tenants} deleteCallback={deleteTenant}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>

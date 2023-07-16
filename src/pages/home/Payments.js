@@ -2,20 +2,47 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import {useState, useEffect} from "react";
-import axios from "axios";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Payments = () => {
+    const navigate = useNavigate();
     const [payments, setPayments] = useState([]);
-    const client = axios.create({
-        baseURL: "http://localhost",
-        headers: {"access-token": localStorage.getItem("accessToken")}
-    })
+
     const getPayments = async () => {
-        const response = await client.get("/payments/all/1");
-        const data = response.data
-        setPayments(data.payload.data);
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        }
+        const response = await fetch("http://localhost/payments/1", params);
+        if (response.status === 200) {
+            const data = await response.json();
+            setPayments(data.payload.data);
+        }else {
+            setPayments([]);
+        }
     }
+    const handleDeletePayment = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        }
+        const response = await fetch(`http://localhost/payments/${id}`, params);
+        if (response.status === 200) {
+            getPayments();
+        }
+    }
+
+    const handleAddNewPaymentClick = (e) => {
+        navigate("/dashboard/payments/new");
+    }
+
     useEffect(() => {
         getPayments();
     }, [payments, setPayments])
@@ -27,9 +54,11 @@ const Payments = () => {
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
-                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New Payment</button>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}
+                                    onClick={handleAddNewPaymentClick}>Add New Payment
+                            </button>
                         </div>
-                        <Table data={payments}/>
+                        <Table data={payments} deleteCallback={handleDeletePayment}/>
                     </div>
                 </div>
                 <div className={"align-baseline"}>
