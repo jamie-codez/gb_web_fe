@@ -13,6 +13,11 @@ import Settings from "./pages/home/Settings";
 import NotFound from "./pages/404";
 import EmailReset from "./pages/EmailReset";
 import {useEffect, useState} from "react";
+import HouseItemPage from "./pages/home/HouseItemPage";
+import TenantItemPage from "./pages/home/TenantItemPage";
+import CommunicationItemPage from "./pages/home/CommunicationItemPage";
+import TaskItemPage from "./pages/home/TaskItemPage";
+import PaymentItemPage from "./pages/home/PaymentItemPage";
 
 
 const ProtectedRoute = ({isLoggedIn, children}) => {
@@ -41,33 +46,33 @@ function App() {
                 <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard/></ProtectedRoute>}/>
                 <Route path={"users"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
-                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Account/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Account/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"houses"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
-                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <HouseItemPage/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <HouseItemPage/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"tenants"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tenants/></ProtectedRoute>}/>
-                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tenants/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tenants/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <TenantItemPage/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <TenantItemPage/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"payments"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Payments/></ProtectedRoute>}/>
-                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Payments/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Payments/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <PaymentItemPage/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <PaymentItemPage/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"communications"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Communication/></ProtectedRoute>}/>
-                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Communication/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Communication/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <CommunicationItemPage/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <CommunicationItemPage/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"tasks"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tasks/></ProtectedRoute>}/>
-                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tasks/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Tasks/></ProtectedRoute>}/>
+                    <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <TaskItemPage/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <TaskItemPage/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"analytics"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Analytics/></ProtectedRoute>}/>
                 <Route path={"account"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Account/></ProtectedRoute>}/>
