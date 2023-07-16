@@ -19,7 +19,7 @@ const Communications = () => {
         setCommunications(data.payload.data);
     }
     const handleAddNewCommunicationClick = () => {
-        navigate("/dashboard/communication/new");
+        navigate("/dashboard/communications/new");
     }
     useEffect(() => {
         getCommunications();

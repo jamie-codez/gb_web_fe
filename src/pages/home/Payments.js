@@ -20,7 +20,7 @@ const Payments = () => {
     }
 
     const handleAddNewPaymentClick = (e) => {
-        navigate("dashboard/payment/new");
+        navigate("/dashboard/payments/new");
     }
 
     useEffect(() => {

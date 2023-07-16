@@ -4,13 +4,12 @@ import Footer from "../../components/Footer";
 import "../../index.css"
 import {useEffect, useState} from "react";
 import axios from "axios";
-import CommunicationForm from "../../components/CommunicationForm";
 import PaymentForm from "../../components/PaymentForm";
 
 const PaymentItemPage = () => {
     const [user, setUsers] = useState({});
     const [id, setId] = useState(null);
-    window.location.href.split("/")[4] ? setId(window.location.href.split("/")[4]) : setId(null)
+    // const payId = window.location.href.split("/")[4] ? setId(window.location.href.split("/")[4]) : setId(null)
     const client = axios.create({baseURL:"http://localhost"})
     const getUser = async () => {
         const response = await client.get("/payment/1");

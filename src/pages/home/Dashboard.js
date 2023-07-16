@@ -13,7 +13,7 @@ import {AiFillMessage, AiTwotoneHome} from "react-icons/ai";
 import {BiMoney, BiUser} from "react-icons/bi";
 
 
-export const Row = ({index,user}) => {
+export const Row = ({user}) => {
     console.log(user)
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -46,7 +46,7 @@ export const Row = ({index,user}) => {
 }
 
 export const Table = ({data}) => {
-    console.log(data)
+    // console.log(data[0])
     return (
         <div className={"table"}>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -67,128 +67,9 @@ export const Table = ({data}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {data.map((index,user)=>{return <Row index={index} user={user}/>})}
-                {/*<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">*/}
-                {/*    <th scope="row"*/}
-                {/*        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">*/}
-                {/*        <img className="w-10 h-10 rounded-full" src={logo}*/}
-                {/*             alt="Jese"/>*/}
-                {/*        <div className="pl-3">*/}
-                {/*            <div className="text-base font-semibold">Neil Sims</div>*/}
-                {/*            <div className="font-normal text-gray-500">neil.sims@flowbite.com</div>*/}
-                {/*        </div>*/}
-                {/*    </th>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        React Developer*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <div className="flex items-center">*/}
-                {/*            <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>*/}
-                {/*            Online*/}
-                {/*        </div>*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <Link to="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit*/}
-                {/*            user</Link>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
-                {/*<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">*/}
-                {/*    <th scope="row"*/}
-                {/*        className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">*/}
-                {/*        <img className="w-10 h-10 rounded-full" src={logo}*/}
-                {/*             alt="Jese"/>*/}
-                {/*        <div className="pl-3">*/}
-                {/*            <div className="text-base font-semibold">Bonnie Green</div>*/}
-                {/*            <div className="font-normal text-gray-500">bonnie@flowbite.com</div>*/}
-                {/*        </div>*/}
-                {/*    </th>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        Designer*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <div className="flex items-center">*/}
-                {/*            <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>*/}
-                {/*            Online*/}
-                {/*        </div>*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <Link to="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit*/}
-                {/*            user</Link>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
-                {/*<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">*/}
-                {/*    <th scope="row"*/}
-                {/*        className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">*/}
-                {/*        <img className="w-10 h-10 rounded-full" src={logo}*/}
-                {/*             alt="Jese"/>*/}
-                {/*        <div className="pl-3">*/}
-                {/*            <div className="text-base font-semibold">Jese Leos</div>*/}
-                {/*            <div className="font-normal text-gray-500">jese@flowbite.com</div>*/}
-                {/*        </div>*/}
-                {/*    </th>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        Vue JS Developer*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <div className="flex items-center">*/}
-                {/*            <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>*/}
-                {/*            Online*/}
-                {/*        </div>*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <Link to="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit*/}
-                {/*            user</Link>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
-                {/*<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">*/}
-                {/*    <th scope="row"*/}
-                {/*        className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">*/}
-                {/*        <img className="w-10 h-10 rounded-full" src={logo}*/}
-                {/*             alt="Jese"/>*/}
-                {/*        <div className="pl-3">*/}
-                {/*            <div className="text-base font-semibold">Thomas Lean</div>*/}
-                {/*            <div className="font-normal text-gray-500">thomes@flowbite.com</div>*/}
-                {/*        </div>*/}
-                {/*    </th>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        UI/UX Engineer*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <div className="flex items-center">*/}
-                {/*            <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>*/}
-                {/*            Online*/}
-                {/*        </div>*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <Link to="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit*/}
-                {/*            user</Link>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
-                {/*<tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">*/}
-                {/*    <th scope="row"*/}
-                {/*        className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">*/}
-                {/*        <img className="w-10 h-10 rounded-full" src={logo}*/}
-                {/*             alt="Jese"/>*/}
-                {/*        <div className="pl-3">*/}
-                {/*            <div className="text-base font-semibold">Leslie Livingston</div>*/}
-                {/*            <div className="font-normal text-gray-500">leslie@flowbite.com</div>*/}
-                {/*        </div>*/}
-                {/*    </th>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        SEO Specialist*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <div className="flex items-center">*/}
-                {/*            <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>*/}
-                {/*            Offline*/}
-                {/*        </div>*/}
-                {/*    </td>*/}
-                {/*    <td className="px-6 py-4">*/}
-                {/*        <Link to="/dashboard/users/userid"*/}
-                {/*              className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit*/}
-                {/*            user</Link>*/}
-                {/*    </td>*/}
-                {/*</tr>*/}
+                {data.map((userData,index) => {
+                    return <Row user={userData}/>
+                })}
                 </tbody>
             </table>
         </div>
@@ -197,6 +78,7 @@ export const Table = ({data}) => {
 
 
 const Dashboard = ({auth, ...rest}) => {
+
     const [houses, setHouses] = useState([]);
     const [users, setUsers] = useState([]);
     const [payments, setPayments] = useState([]);
