@@ -20,7 +20,7 @@ const Tenants = () => {
     }
 
     const handleAddNewTenantClick = () => {
-        navigate("/dashboard/tenant/new")
+        navigate("/dashboard/tenants/new")
     }
 
     useEffect(() => {
