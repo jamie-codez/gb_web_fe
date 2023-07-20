@@ -1,9 +1,9 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
-import {Table} from "./Dashboard";
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { Table } from "./Dashboard";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Payments = () => {
     const navigate = useNavigate();
@@ -20,8 +20,13 @@ const Payments = () => {
         const response = await fetch("http://localhost/payments/1", params);
         if (response.status === 200) {
             const data = await response.json();
-            setPayments(data.payload.data);
-        }else {
+            if (data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else {
+                setPayments(data.payload.data);
+            }
+        } else {
             setPayments([]);
         }
     }
@@ -48,21 +53,21 @@ const Payments = () => {
     }, [payments, setPayments])
     return (
         <div className={"flex"}>
-            <SideBar/>
+            <SideBar />
             <div className={"flex flex-col w-full h-screen"}>
-                <NavHeader/>
+                <NavHeader />
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
                             <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}
-                                    onClick={handleAddNewPaymentClick}>Add New Payment
+                                onClick={handleAddNewPaymentClick}>Add New Payment
                             </button>
                         </div>
-                        <Table data={payments} deleteCallback={handleDeletePayment}/>
+                        <Table data={payments} deleteCallback={handleDeletePayment} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
         </div>
