@@ -3,8 +3,6 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import "../../index.css"
 import { useEffect, useState } from "react";
-import axios from "axios";
-import CommunicationForm from "../../components/CommunicationForm";
 import TaskForm from "../../components/TaskForm";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -12,7 +10,6 @@ const TaskItemPage = () => {
     const [task, setTask] = useState({});
     const navigate = useNavigate();
     const { id } = useParams();
-    const client = axios.create({ baseURL: "http://localhost" })
     const getTask = async () => {
         const params = {
             method: 'GET',
