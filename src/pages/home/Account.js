@@ -9,9 +9,6 @@ import { useParams } from "react-router-dom";
 const Account = () => {
     const [user, setUser] = useState(null);
     const { id } = useParams();
-    if (id) {
-         getUser();
-    }
 
     const getUser = async () => {
         const params = {
@@ -21,16 +18,19 @@ const Account = () => {
                 'Content-Type': 'application/json'
             }
         }
-        const response = await fetch(`http://localhost/users/${id}`, params);
+        const response = await fetch(`http://localhost/user/${id}`, params);
         if (response.status === 200) {
             const jsonData = await response.json();
-            if (jsonData.payload.data.length === 0) {
+            if (jsonData.payload.data) {
                 alert("User not found");
                 return;
             }
             setUser(jsonData.payload.data);
         }
     };
+    if (id) {
+        getUser();
+   }
 
     return (
         <div className={"flex"}>

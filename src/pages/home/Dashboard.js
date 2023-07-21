@@ -4,13 +4,13 @@ import Footer from "../../components/Footer";
 import logo from "../../assets/logo.png";
 import "../../index.css";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import React, { useState } from "react";
 import DashCard from "../../components/DashCard";
 import { PiUsersFour } from "react-icons/pi";
 import { AiFillMessage, AiOutlineDelete, AiOutlineEdit, AiTwotoneHome } from "react-icons/ai";
 import { BiMoney, BiUser } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 
 export const Row = ({ user, editCallback, deleteCallback }) => {
@@ -18,6 +18,8 @@ export const Row = ({ user, editCallback, deleteCallback }) => {
         e.preventDefault();
         deleteCallback(user._id);
     }
+
+
     const handleEditCallback = (e) => {
         e.preventDefault();
         editCallback(user._id);
@@ -90,7 +92,7 @@ export const Table = ({ data, editCallback, deleteCallback }) => {
 
 
 const Dashboard = ({ auth, ...rest }) => {
-
+    const navigate = useNavigate();
     const [houses, setHouses] = useState([]);
     const [users, setUsers] = useState([]);
     const [payments, setPayments] = useState([]);
@@ -171,7 +173,7 @@ const Dashboard = ({ auth, ...rest }) => {
     }
 
     const editHouse = (id) => {
-        window.location.href = `/dashboard/houses/${id}`
+        navigate(`/dashboard/houses/${id}`);
     }
 
     const deleteHouse = async (id) => {
@@ -258,8 +260,9 @@ const Dashboard = ({ auth, ...rest }) => {
         }
     }
 
-    const editUser = (email) => {
-        window.location.href = `/dashboard/users/${email}`;
+    const editUser = (id) => {
+        console.log(id)
+        return navigate(`/dashboard/users/${id}`);
     }
 
     useEffect(() => {
@@ -268,7 +271,7 @@ const Dashboard = ({ auth, ...rest }) => {
         getPayments();
         getMessages();
         getTenants();
-    }, []);
+    });
 
     return (
         <div className={"flex max-h-full"}>
