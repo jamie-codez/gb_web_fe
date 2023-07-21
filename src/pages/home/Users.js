@@ -55,7 +55,7 @@ const Users = () => {
     }
     useEffect(() => {
         getUsers();
-    }, []);
+    }, [users, setUsers]);
     return (
         <div className={"flex"}>
             <SideBar />

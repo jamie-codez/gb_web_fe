@@ -48,9 +48,10 @@ const UserForm = ({ userData }) => {
         }
         let response;
         if (verb === "PUT") {
-            response = await fetch(`http://localhost/users/${userData.id}`, params);
+            response = await fetch(`http://localhost/users/${userData._id}`, params);
+        } else {
+            response = await fetch(`http://localhost/users`, params);
         }
-        response = await fetch(`http://localhost/users`, params);
         if (response.status === 200) {
             const jsonData = await response.json();
             if (jsonData.code === 200 || jsonData.code === 201) {
@@ -63,13 +64,16 @@ const UserForm = ({ userData }) => {
                 return;
             }
             alert("User creation failed, try again");
+            setLoading(false);
         } else {
             alert("User creation failed, try again");
+            setLoading(false);
         }
     }
 
     return (
         <div className={"account_form mt-10"}>
+            <p>Name:{userData ? userData.username : ""}</p>
             <form onSubmit={(e) => { setLoading(true); handleSubmit(e); }}>
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="email" value={email} name="floating_email" id="floating_email" onChange={(e) => setEmail(e.target.value)}
