@@ -41,7 +41,10 @@ const HouseForm = ({houseData}) => {
     }
     return (
         <div className={"account_form mt-10"}>
-            <form>
+            <form onSubmit={e => {
+                handleSubmit(e);
+                setLoading(true);
+            }}>
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="email" name="floating_email" id="floating_email" value={houseNumber} onChange={(e) => {
                         setHouseNumber(e.target.value);
