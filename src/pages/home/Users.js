@@ -1,9 +1,9 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
-import {Table} from "./Dashboard";
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { Table } from "./Dashboard";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
     const navigate = useNavigate();
@@ -23,12 +23,30 @@ const Users = () => {
                 const jsonData = await response.json();
                 console.log(jsonData);
                 setUsers(jsonData.payload.data);
-            }else {
+            } else {
                 setUsers([]);
             }
         } catch (e) {
             console.log(e);
         }
+    }
+
+    const deleteUser = async (id) => {
+        const params = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+        const response = await fetch(`http://localhost/users/${id}`, params);
+        if (response.status === 200) {
+            getUsers();
+        }
+    }
+
+    const editUser = (id) => {
+        navigate(`/dashboard/users/${id}`);
     }
 
     const handleAddNewUser = (e) => {
@@ -37,23 +55,23 @@ const Users = () => {
     }
     useEffect(() => {
         getUsers();
-    }, []);
+    }, [users, setUsers]);
     return (
         <div className={"flex"}>
-            <SideBar/>
+            <SideBar />
             <div className={"flex flex-col w-full h-screen"}>
-                <NavHeader/>
+                <NavHeader />
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"} onClick={handleAddNewUser}>
                             <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New User
                             </button>
                         </div>
-                        <Table data={users}/>
+                        <Table data={users} editCallback={editUser} deleteCallback={deleteUser} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
         </div>

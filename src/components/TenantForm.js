@@ -1,7 +1,45 @@
-const TenantForm = () => {
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+
+const TenantForm = ({tenantData}) => {
+    const [clientEmail, setClientEmail] = useState(tenantData ? tenantData.email : "");
+    const [houseNumber, setHouseNumber] = useState(tenantData ? tenantData.houseNumber : "");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const handleButtonClick = async (e) => {
+        e.preventDefault()
+        const params = {
+            method: 'POST',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                clientEmail: clientEmail,
+                houseNumber: houseNumber
+            })
+        };
+        const response = await fetch(`http://localhost/tenants`, params);
+        if (response.status === 200) {
+            const data = await response.json();
+            if (data.status === 453) {
+                return navigate("/login");
+            }
+            setClientEmail(data.payload.clientEmail);
+            setHouseNumber(data.payload.houseNumber);
+        } else {
+            setClientEmail("");
+            setHouseNumber("");
+            alert("Error")
+        }
+    }
     return (
         <div className={"account_form mt-10"}>
-            <form>
+            <form onSubmit={e => {
+                handleButtonClick(e);
+                setLoading(true);
+            }}>
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="email" name="floating_email" id="floating_email"
                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -68,8 +106,11 @@ const TenantForm = () => {
                             aria-describedby="user_avatar_help" id="user_avatar" type="file"/>
                     </div>
                 </div>
-                <button type="submit" className="flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Update
+                <button type="submit" onClick={e => {
+                    handleButtonClick(e);
+                    setLoading(true);
+                }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
+                    {tenantData?"Update":"Create"}
                 </button>
             </form>
         </div>

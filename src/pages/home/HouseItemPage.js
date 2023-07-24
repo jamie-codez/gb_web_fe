@@ -3,32 +3,52 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import UserForm from "../../components/UserForm";
 import "../../index.css"
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import CommunicationForm from "../../components/CommunicationForm";
 import HouseForm from "../../components/HouseForm";
+import { useParams, useNavigate } from "react-router-dom";
 
 const HouseItemPage = () => {
-    const [user, setUsers] = useState({});
-    const client = axios.create({baseURL:"http://localhost"})
-    const getUser = async () => {
-        const response = await client.get("/house/1");
-        const data = response.data
-        setUsers(data.payload.data);
+    const [house, setHouse] = useState(null);
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    const getHouse = async (id) => {
+        const params = {
+            method: 'GET',
+            headers: {
+                "access-token": localStorage.getItem("accessToken"),
+                "Content-Type": "application/json"
+            }
+        };
+        const response = await fetch(`http://localhost/houses/${id}`, params);
+        if (response.status === 200) {
+            const data = await response.json();
+            if (data.status === 453) {
+                return navigate("/login");
+            }
+            setHouse(data.payload);
+        } else {
+            setHouse({});
+        }
     }
+
     useEffect(() => {
-        getUser();
-    }, [user, setUsers]);
+        if (id) {
+            getHouse(id);
+        }
+    }, [house, setHouse]);
     return (
         <div className={"flex"}>
-            <SideBar/>
+            <SideBar />
             <div className={"flex flex-col w-full h-screen max-h-full"}>
-                <NavHeader/>
+                <NavHeader />
                 <div className={"h-full mr-10 ml-10 mt-20"}>
-                    <HouseForm/>
+                    <HouseForm />
                 </div>
                 <div className={"align-baseline"}>
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
         </div>)

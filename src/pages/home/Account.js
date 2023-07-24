@@ -3,33 +3,55 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import UserForm from "../../components/UserForm";
 import "../../index.css"
-import {useEffect, useState} from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const Account = () => {
-    const [user, setUsers] = useState({});
-    const client = axios.create({baseURL:"http://localhost"})
-    const getUser = async () => {
-        const response = await client.get("/users/1");
-        const data = response.data
-        setUsers(data.payload.data);
-    }
+    const [user, setUser] = useState(null);
+    const { id } = useParams();
+    console.log(id);
+
+    const getUser = async (id) => {
+        const params = {
+            method: 'GET',
+            headers: {
+                'access-token': localStorage.getItem('accessToken'),
+                'Content-Type': 'application/json'
+            }
+        }
+        const response = await fetch(`http://localhost/user/${id}`, params);
+        if (response.status === 200) {
+            const jsonData = await response.json();
+            if (!jsonData.payload) {
+                alert("User not found");
+                return;
+            }
+            console.log(jsonData.payload);
+            setUser(jsonData.payload);
+        }
+    };
+
     useEffect(() => {
-        getUser();
-    }, [user, setUsers]);
+        if (id) {
+            getUser(id);
+        }
+    },[user,setUser]);
+
+
     return (
         <div className={"flex"}>
-            <SideBar/>
+            <SideBar />
             <div className={"flex flex-col w-full h-screen max-h-full"}>
-                <NavHeader/>
+                <NavHeader />
                 <div className={"h-full mr-10 ml-10 mt-20"}>
-                    <UserForm/>
+                    <UserForm userData={user} />
                 </div>
                 <div className={"align-baseline"}>
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default Account;
