@@ -3,9 +3,16 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
 import {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
 const Houses = () => {
     const [houses, setHouses] = useState([]);
+    const navigate = useNavigate();
+
+    const handleNavigate = (e) => {
+        e.preventDefault();
+        navigate(`/houses/new/`);
+    }
     
     useEffect(() => {
         const getHouses = async () => {
@@ -39,7 +46,7 @@ const Houses = () => {
                 <div className={"h-full w-full"}>
                     <div className={"flex flex-col w-full mt-10"}>
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
-                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"}>Add New House</button>
+                            <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"} onClick={handleNavigate}>Add New House</button>
                         </div>
                         <Table data={houses}/>
                     </div>
