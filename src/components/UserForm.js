@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import swal from "sweetalert";
 
 const UserForm = ({ userData }) => {
@@ -10,15 +10,6 @@ const UserForm = ({ userData }) => {
     const [phone, setPhone] = useState(userData ? userData.phone : "");
     const [password, setPassword] = useState(userData ? userData.password : "");
     const [loading, setLoading] = useState(false);
-    const user = {
-        username: username,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        idNumber: idNumber,
-        phone: phone,
-        password: password
-    }
 
     let verb;
     if (userData) {
@@ -74,7 +65,10 @@ const UserForm = ({ userData }) => {
     return (
         <div className={"account_form mt-10"}>
             <p>Name:{userData ? userData.username : ""}</p>
-            <form onSubmit={(e) => { setLoading(true); handleSubmit(e); }}>
+            <form onSubmit={(e) => {
+                setLoading(true);
+                handleSubmit(e).then(result => console.log(result));
+            }}>
                 <div className="relative z-0 w-full mb-6 group">
                     <input type="email" value={email} name="floating_email" id="floating_email" onChange={(e) => setEmail(e.target.value)}
                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -140,7 +134,11 @@ const UserForm = ({ userData }) => {
                             aria-describedby="user_avatar_help" id="user_avatar" type="file" />
                     </div>
                 </div>
-                <button type="submit" onClick={(e) => { setLoading(true); handleSubmit(e) }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
+                <button type="submit" onClick={(e) => {
+                    setLoading(true);
+                    handleSubmit(e).then(result => console.log(result))
+                }}
+                        className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
                     {userData ? "Update" : "Create"}
                 </button>
             </form>
