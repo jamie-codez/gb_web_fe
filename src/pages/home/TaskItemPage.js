@@ -2,14 +2,15 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import "../../index.css"
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import TaskForm from "../../components/TaskForm";
-import { useParams, useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const TaskItemPage = () => {
     const [task, setTask] = useState({});
     const navigate = useNavigate();
     const { id } = useParams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getTask = async () => {
         const params = {
             method: 'GET',
@@ -30,8 +31,8 @@ const TaskItemPage = () => {
         }
     }
     useEffect(() => {
-        getTask();
-    }, [task, setTask]);
+        getTask().then(r => console.log(r));
+    }, [task, setTask, getTask]);
     return (
         <div className={"flex"}>
             <SideBar />

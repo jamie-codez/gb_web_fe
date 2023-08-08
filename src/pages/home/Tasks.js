@@ -2,14 +2,12 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import axios from "axios";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Tasks = () => {
     const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
-    const client = axios.create({baseURL: "http://localhost"})
     const getTasks = async () => {
         const params = {
             method: 'GET',
@@ -40,12 +38,12 @@ const Tasks = () => {
         }
         const response = await fetch(`http://localhost/tasks/${id}`, params)
         if (response.status === 200) {
-            getTasks();
+            getTasks().then(result => console.log(result));
         }
     }
 
     useEffect(() => {
-        getTasks();
+        getTasks().then(r => console.log(r));
     }, [tasks, setTasks]);
     return (
         <div className={"flex"}>
