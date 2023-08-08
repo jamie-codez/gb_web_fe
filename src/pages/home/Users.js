@@ -41,7 +41,7 @@ const Users = () => {
         }
         const response = await fetch(`http://localhost/users/${id}`, params);
         if (response.status === 200) {
-            getUsers();
+            getUsers().then(response=>console.log(response));
         }
     }
 
@@ -54,7 +54,7 @@ const Users = () => {
         navigate("/dashboard/users/new")
     }
     useEffect(() => {
-        getUsers();
+        getUsers().then(result=>console.log(result));
     }, [users, setUsers]);
     return (
         <div className={"flex"}>

@@ -1,19 +1,17 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
-import UserForm from "../../components/UserForm";
 import "../../index.css"
-import { useEffect, useState } from "react";
-import axios from "axios";
-import CommunicationForm from "../../components/CommunicationForm";
+import {useEffect, useState} from "react";
 import TenantForm from "../../components/TenantForm";
-import { useParams,useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const TenantItemPage = () => {
     const [tenant, setTenant] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getTenant = async () => {
         const params = {
             method: 'GET',
@@ -35,9 +33,9 @@ const TenantItemPage = () => {
     }
     useEffect(() => {
         if (id) {
-            getTenant(id);
+            getTenant(id).then(response=>console.log(response));
         }
-    }, [tenant, setTenant]);
+    }, [tenant, setTenant, id, getTenant]);
     return (
         <div className={"flex"}>
             <SideBar />

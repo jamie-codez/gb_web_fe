@@ -39,7 +39,7 @@ const Tenants = () => {
         };
         const response = await fetch(`http://localhost/tenants/${id}`, params);
         if (response.status === 200) {
-            getTenants();
+            getTenants().then(response=>console.log(response));
         }
     }
 
@@ -52,7 +52,7 @@ const Tenants = () => {
     }
 
     useEffect(() => {
-        getTenants();
+        getTenants().then(result=>console.log(result));
     }, [tenants, setTenants]);
     return (
         <div className={"flex"}>
@@ -74,7 +74,7 @@ const Tenants = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Tenants;
