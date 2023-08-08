@@ -3,8 +3,8 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import UserForm from "../../components/UserForm";
 import "../../index.css"
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 const Account = () => {
     const [user, setUser] = useState(null);
@@ -33,9 +33,9 @@ const Account = () => {
 
     useEffect(() => {
         if (id) {
-            getUser(id);
+            getUser(id).then(result => console.log(result));
         }
-    },[user,setUser]);
+    }, [user, setUser, id]);
 
 
     return (

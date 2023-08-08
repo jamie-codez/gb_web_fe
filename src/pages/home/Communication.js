@@ -29,7 +29,7 @@ const Communications = () => {
         }
         const response = await fetch(`http://localhost/communications/${id}`, params)
         if (response.status === 200) {
-            getCommunications();
+            getCommunications().then(result=>console.log(result));
         }
     }
 
@@ -37,8 +37,8 @@ const Communications = () => {
         navigate("/dashboard/communications/new");
     }
     useEffect(() => {
-        getCommunications();
-    }, [communications, setCommunications]);
+        getCommunications().then(result=>console.log(result));
+    }, [communications, getCommunications, setCommunications]);
     return (
         <div className={"flex"}>
             <SideBar/>

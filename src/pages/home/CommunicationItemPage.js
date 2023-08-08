@@ -2,15 +2,16 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import "../../index.css"
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import CommunicationForm from "../../components/CommunicationForm";
-import { useParams, useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const CommunicationItemPage = () => {
     const [communication, setCommunication] = useState({});
     const { id } = useParams();
     const navigate = useNavigate();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getCommunication = async (id) => {
         const params = {
             method: 'GET',
@@ -33,9 +34,9 @@ const CommunicationItemPage = () => {
 
     useEffect(() => {
         if (id) {
-            getCommunication(id)
+            getCommunication(id).then(result => console.log(result))
         }
-    }, [communication, setCommunication]);
+    }, [communication, getCommunication, id, setCommunication]);
     return (
         <div className={"flex"}>
             <SideBar />
@@ -48,7 +49,8 @@ const CommunicationItemPage = () => {
                     <Footer />
                 </div>
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default CommunicationItemPage;
