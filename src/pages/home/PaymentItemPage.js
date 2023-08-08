@@ -2,15 +2,16 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import "../../index.css"
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import PaymentForm from "../../components/PaymentForm";
-import { useParams, useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const PaymentItemPage = () => {
     const [payment, setPayment] = useState({});
     const navigate = useNavigate();
     const { id } = useParams();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getPayment = async (id) => {
         const params = {
             method: 'GET',
@@ -34,9 +35,9 @@ const PaymentItemPage = () => {
 
     useEffect(() => {
         if (id) {
-            getPayment(id);
+            getPayment(id).then(result => console.log(result));
         }
-    }, [payment, setPayment]);
+    }, [getPayment, id, payment, setPayment]);
     return (
         <div className={"flex"}>
             <SideBar />
@@ -49,7 +50,8 @@ const PaymentItemPage = () => {
                     <Footer />
                 </div>
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default PaymentItemPage;

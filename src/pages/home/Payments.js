@@ -1,9 +1,9 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
-import { Table } from "./Dashboard";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Table} from "./Dashboard";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Payments = () => {
     const navigate = useNavigate();
@@ -40,16 +40,17 @@ const Payments = () => {
         }
         const response = await fetch(`http://localhost/payments/${id}`, params);
         if (response.status === 200) {
-            getPayments();
+            getPayments().then(result => console.log(result));
         }
     }
 
     const handleAddNewPaymentClick = (e) => {
+        e.preventDefault();
         navigate("/dashboard/payments/new");
     }
 
     useEffect(() => {
-        getPayments();
+        getPayments().then(result => console.log(result));
     }, [payments, setPayments])
     return (
         <div className={"flex"}>
