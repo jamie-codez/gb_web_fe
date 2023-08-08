@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import swal from "sweetalert";
 
 const HouseForm = ({houseData}) => {
     const [houseNumber, setHouseNumber] = useState(houseData ? houseData.houseNumber : "");
@@ -37,12 +38,18 @@ const HouseForm = ({houseData}) => {
             setDeposit(data.payload.deposit);
             setFloor(data.payload.floor);
             setOccupied(data.payload.occupied);
+        } else {
+            alert("An error occurred try again");
         }
     }
     return (
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {
-                handleSubmit(e);
+                handleSubmit(e).then(response => {
+                    swal("Success!", "Communication has been created successfully!", "success")
+                        .then(r => console.log(r))
+
+                });
                 setLoading(true);
             }}>
                 <div className="relative z-0 w-full mb-6 group">

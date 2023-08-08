@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import swal from "sweetalert";
 
 const TenantForm = ({tenantData}) => {
     const [clientEmail, setClientEmail] = useState(tenantData ? tenantData.email : "");
@@ -37,7 +38,7 @@ const TenantForm = ({tenantData}) => {
     return (
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {
-                handleButtonClick(e);
+                handleButtonClick(e).then(result => swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r)));
                 setLoading(true);
             }}>
                 <div className="relative z-0 w-full mb-6 group">
@@ -107,7 +108,7 @@ const TenantForm = ({tenantData}) => {
                     </div>
                 </div>
                 <button type="submit" onClick={e => {
-                    handleButtonClick(e);
+                    handleButtonClick(e).then(result => swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r)));
                     setLoading(true);
                 }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
                     {tenantData?"Update":"Create"}

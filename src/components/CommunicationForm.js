@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import swal from "sweetalert";
 
 
 const CommunicationForm = ({data}) => {
@@ -32,12 +33,18 @@ const CommunicationForm = ({data}) => {
             setTo(data.payload.to);
             setTitle(data.payload.title);
             setDescription(data.payload.description);
+        }else {
+            alert("An error occurred try again")
         }
     }
     return (
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {
-                handleSubmit(e);
+                handleSubmit(e).then(result => {
+                    console.log(result);
+                    swal("Success!", "Communication has been created successfully!", "success")
+                        .then(r => console.log(r))
+                });
                 setLoading(true);
             }}>
                 <div className="relative z-0 w-full mb-6 group">
