@@ -2,8 +2,8 @@ import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import {Table} from "./Dashboard";
-import {useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Houses = () => {
     const [houses, setHouses] = useState([]);
@@ -11,7 +11,7 @@ const Houses = () => {
 
     const handleNavigate = (e) => {
         e.preventDefault();
-        navigate(`/houses/new/`);
+        navigate(`/dashboard/houses/new/`);
     }
     
     useEffect(() => {
@@ -36,7 +36,7 @@ const Houses = () => {
                 setHouses([])
             }
         }
-        getHouses();
+        getHouses().then(r => console.log(r));
     }, [houses, setHouses]);
     return (
         <div className={"flex"}>
