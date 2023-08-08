@@ -1,19 +1,17 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
-import UserForm from "../../components/UserForm";
 import "../../index.css"
-import { useEffect, useState } from "react";
-import axios from "axios";
-import CommunicationForm from "../../components/CommunicationForm";
+import {useEffect, useState} from "react";
 import HouseForm from "../../components/HouseForm";
-import { useParams, useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const HouseItemPage = () => {
     const [house, setHouse] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getHouse = async (id) => {
         const params = {
             method: 'GET',
@@ -36,9 +34,9 @@ const HouseItemPage = () => {
 
     useEffect(() => {
         if (id) {
-            getHouse(id);
+            getHouse(id).then(result=>console.log(result));
         }
-    }, [house, setHouse]);
+    }, [getHouse, house, id, setHouse]);
     return (
         <div className={"flex"}>
             <SideBar />

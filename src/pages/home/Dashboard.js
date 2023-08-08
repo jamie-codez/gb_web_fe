@@ -3,14 +3,13 @@ import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import logo from "../../assets/logo.png";
 import "../../index.css";
-import { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import React, { useState } from "react";
 import DashCard from "../../components/DashCard";
-import { PiUsersFour } from "react-icons/pi";
-import { AiFillMessage, AiOutlineDelete, AiOutlineEdit, AiTwotoneHome } from "react-icons/ai";
-import { BiMoney, BiUser } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import {PiUsersFour} from "react-icons/pi";
+import {AiFillMessage, AiOutlineDelete, AiOutlineEdit, AiTwotoneHome} from "react-icons/ai";
+import {BiMoney, BiUser} from "react-icons/bi";
+import {useNavigate} from "react-router-dom";
 
 
 export const Row = ({ user, editCallback, deleteCallback }) => {
@@ -191,7 +190,7 @@ const Dashboard = ({ auth, ...rest }) => {
                 localStorage.clear();
                 window.location.href = "/login"
             } else {
-                getHouses();
+                getHouses().then(result => console.log(result));
             }
         } else {
             alert("Error deleting house");
@@ -213,7 +212,7 @@ const Dashboard = ({ auth, ...rest }) => {
                 localStorage.clear();
                 window.location.href = "/login"
             } else {
-                getPayments();
+                getPayments().then(result => console.log(result));
             }
         } else {
             alert("Error deleting payment");
@@ -231,7 +230,7 @@ const Dashboard = ({ auth, ...rest }) => {
         const response = await fetch(`http://localhost/communications/${id}`, params);
         const data = await response.json();
         if (data.status === 200) {
-            getMessages();
+            getMessages().then(result => console.log(result));
         } else {
             alert("Error deleting message");
         }
@@ -253,7 +252,7 @@ const Dashboard = ({ auth, ...rest }) => {
                 localStorage.clear();
                 window.location.href = "/login"
             } else {
-                getUsers();
+                getUsers().then(result => console.log(result));
             }
         } else {
             alert("Error deleting user");
@@ -266,12 +265,12 @@ const Dashboard = ({ auth, ...rest }) => {
     }
 
     useEffect(() => {
-        getHouses();
-        getUsers();
-        getPayments();
-        getMessages();
-        getTenants();
-    });
+        getHouses().then(result=>console.log(result));
+        getUsers().then(result=>console.log(result));
+        getPayments().then(result=>console.log(result));
+        getMessages().then(result=>console.log(result));
+        getTenants().then(result=>console.log(result));
+    }, [houses, setHouses, users, setUsers, payments, setPayments, messages, setMessages, tenants, setTenants, getHouses, getUsers, getPayments, getMessages, getTenants]);
 
     return (
         <div className={"flex max-h-full"}>
