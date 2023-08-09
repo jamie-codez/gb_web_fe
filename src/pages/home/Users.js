@@ -1,6 +1,7 @@
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
+import axios from "axios";
 import { Table } from "./Dashboard";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,27 +9,41 @@ import { useNavigate } from "react-router-dom";
 const Users = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
+    const client = axios.create({ baseURL: "http://localhost" })
+
+    // const getUsers = async () => {
+    //     try {
+    //         const params = {
+    //             method: 'GET',
+    //             headers: {
+    //                 'access-token': localStorage.getItem('accessToken'),
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         }
+    //         const response = await fetch("http://localhost/users/1", params);
+    //         if (response.status === 200) {
+    //             const jsonData = await response.json();
+    //             console.log(jsonData);
+    //             setUsers(jsonData.payload.data);
+    //         } else {
+    //             setUsers([]);
+    //         }
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
 
     const getUsers = async () => {
-        try {
-            const params = {
-                method: 'GET',
+        console.log(users)
+        const response = await client.get('/users/1',
+            {
                 headers: {
-                    'access-token': localStorage.getItem('accessToken'),
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'access-token': localStorage.getItem('accessToken')
                 }
-            }
-            const response = await fetch("http://localhost/users/1", params);
-            if (response.status === 200) {
-                const jsonData = await response.json();
-                console.log(jsonData);
-                setUsers(jsonData.payload.data);
-            } else {
-                setUsers([]);
-            }
-        } catch (e) {
-            console.log(e);
-        }
+            });
+            response.status===200?
+        setUsers(response.data.payload.data):setUsers([]);
     }
 
     const deleteUser = async (id) => {

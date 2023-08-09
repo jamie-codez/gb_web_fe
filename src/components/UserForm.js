@@ -20,7 +20,7 @@ const UserForm = ({ userData }) => {
         password: password
     }
 
-    let verb;
+    const verb="";
     if (userData) {
         verb = "PUT";
     } else {

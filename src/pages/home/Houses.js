@@ -11,7 +11,7 @@ const Houses = () => {
 
     const handleNavigate = (e) => {
         e.preventDefault();
-        navigate(`/houses/new/`);
+        navigate(`/dashboard/houses/new/`);
     }
     
     useEffect(() => {

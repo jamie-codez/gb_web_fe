@@ -109,7 +109,8 @@ const Dashboard = ({ auth, ...rest }) => {
                     'access-token': localStorage.getItem('accessToken')
                 }
             });
-        setUsers(response.data.payload.data);
+            response.status===200?
+        setUsers(response.data.payload.data):setUsers([]);
     }
 
     const getHouses = async () => {
@@ -120,7 +121,8 @@ const Dashboard = ({ auth, ...rest }) => {
                     'access-token': localStorage.getItem('accessToken')
                 }
             });
-        setHouses(response.data.payload.data);
+            response.status===200?
+        setHouses(response.data.payload.data):setHouses([]);
     }
 
     const getPayments = async () => {
@@ -134,8 +136,9 @@ const Dashboard = ({ auth, ...rest }) => {
         if (response.data.code === 453) {
             localStorage.clear();
             window.location.href = "/login"
-        } else
-            setPayments(response.data.payload.data);
+        } else{
+            response.status===200?
+            setPayments(response.data.payload.data):setPayments([]);}
     }
 
     const getMessages = async () => {
@@ -150,7 +153,8 @@ const Dashboard = ({ auth, ...rest }) => {
             localStorage.clear();
             window.location.href = "/login"
         } else {
-            setMessages(response.data.payload.data);
+            response.status===200?
+            setMessages(response.data.payload.data):setMessages([]);
         }
     }
 
@@ -167,7 +171,8 @@ const Dashboard = ({ auth, ...rest }) => {
                 localStorage.clear();
                 window.location.href = "/login"
             } else {
-                setTenants(response.data.payload.data);
+                response.status===200?
+                setTenants(response.data.payload.data):setTenants([]);
             }
         }
     }
