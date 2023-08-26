@@ -24,9 +24,14 @@ const HouseItemPage = () => {
         if (response.status === 200) {
             const data = await response.json();
             if (data.status === 453) {
+                localStorage.clear();
                 return navigate("/login");
+            }else if(data.status===200){
+                setHouse(data.payload);
+            }else{
+                alert(data.message);
+                setHouse({});
             }
-            setHouse(data.payload);
         } else {
             setHouse({});
         }
@@ -34,7 +39,7 @@ const HouseItemPage = () => {
 
     useEffect(() => {
         if (id) {
-            getHouse(id).then(result=>console.log(result));
+            getHouse(id).then(()=>console.log("getHouse promise resolved"));
         }
     }, [getHouse, house, id, setHouse]);
     return (

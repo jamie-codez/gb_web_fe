@@ -31,7 +31,7 @@ const TaskItemPage = () => {
         }
     }
     useEffect(() => {
-        getTask().then(r => console.log(r));
+        getTask().then(() => console.log("getTask promise resolved"));
     }, [task, setTask, getTask]);
     return (
         <div className={"flex"}>

@@ -24,9 +24,14 @@ const CommunicationItemPage = () => {
         if (response.status === 200) {
             const data = await response.json();
             if (data.status === 453) {
+                localStorage.clear();
                 return navigate("/login");
+            }else if(data.status===200){
+                setCommunication(data.payload);
+            }else{
+                alert(data.message);
+                setCommunication({});
             }
-            setCommunication(data.payload);
         } else {
             setCommunication({});
         }
@@ -34,7 +39,7 @@ const CommunicationItemPage = () => {
 
     useEffect(() => {
         if (id) {
-            getCommunication(id).then(result => console.log(result))
+            getCommunication(id).then(() => console.log("getCommunication promise resolved"))
         }
     }, [communication, getCommunication, id, setCommunication]);
     return (

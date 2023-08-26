@@ -1,15 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import SideBar from "../../components/SideBar";
 import NavHeader from "../../components/NavHeader";
 import Footer from "../../components/Footer";
 import logo from "../../assets/logo.png";
 import "../../index.css";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashCard from "../../components/DashCard";
-import {PiUsersFour} from "react-icons/pi";
-import {AiFillMessage, AiOutlineDelete, AiOutlineEdit, AiTwotoneHome} from "react-icons/ai";
-import {BiMoney, BiUser} from "react-icons/bi";
-import {useNavigate} from "react-router-dom";
+import { PiUsersFour } from "react-icons/pi";
+import { AiFillMessage, AiOutlineDelete, AiOutlineEdit, AiTwotoneHome } from "react-icons/ai";
+import { BiMoney, BiUser } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 
 export const Row = ({ user, editCallback, deleteCallback }) => {
@@ -52,6 +54,49 @@ export const Row = ({ user, editCallback, deleteCallback }) => {
         </tr>
     )
 }
+
+export const HouseRow = ({ house, editCallback, deleteCallback }) => {
+    const handleDeleteCallback = (e) => {
+        e.preventDefault();
+        deleteCallback(house._id);
+    }
+
+
+    const handleEditCallback = (e) => {
+        e.preventDefault();
+        editCallback(house._id);
+    }
+
+    return (
+        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th scope="row"
+                className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                <img className="w-10 h-10 rounded-full" src={logo}
+                    alt="Profile" />
+                <div className="pl-3">
+                    <div className="text-base font-semibold">{house.houseNumber}</div>
+                    <div className="font-normal text-gray-500">{house.rent}</div>
+                </div>
+            </th>
+            <td className="px-6 py-4">
+                {house.floor}
+            </td>
+            <td className="px-6 py-4">
+                <div className="flex items-center">
+                    {house.occupied ? <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> :
+                        <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>}
+                    Occupied
+                </div>
+            </td>
+            <td className="px-6 py-4 flex flex-row items-center justify-center mb-5">
+                <AiOutlineEdit className={"text-blue-500 cursor-pointer w-5 h-5"} onClick={handleEditCallback} />
+                <AiOutlineDelete className={"ml-5 text-red-500 cursor-pointer w-5 h-5"} onClick={handleDeleteCallback} />
+            </td>
+        </tr>
+    )
+}
+
+
 
 export const Table = ({ data, editCallback, deleteCallback }) => {
     return (
@@ -108,7 +153,22 @@ const Dashboard = ({ auth, ...rest }) => {
                     'access-token': localStorage.getItem('accessToken')
                 }
             });
-        setUsers(response.data.payload.data);
+        if (response.status === 200) {
+            if (response.data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(response.data.code===200){
+                if(!response.data.payload.data){
+                    setUsers([]);
+                }else{
+                setUsers(response.data.payload.data);}
+            }else{
+                // alert(response.data.message);
+                console.log(response.data.message);
+            }
+        } else {
+            setUsers([])
+        }
     }
 
     const getHouses = async () => {
@@ -119,22 +179,52 @@ const Dashboard = ({ auth, ...rest }) => {
                     'access-token': localStorage.getItem('accessToken')
                 }
             });
-        setHouses(response.data.payload.data);
+            console.log(response.status)
+        if (response.status === 200) {
+            console.log(response.data)
+            if (response.data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(response.data.code===200){
+                if(!response.data.payload.data){
+                    setHouses([]);
+                }else{
+                setHouses(response.data.payload.data);}
+            }else{
+                // alert(response.data.message);
+                console.log(response.data.message);
+            }
+        } else {
+            setHouses([])
+        }
     }
 
     const getPayments = async () => {
-        const response = await client.get('/payments/all/1',
+        const response = await client.get('/payments/1',
             {
                 headers: {
                     'Content-Type': 'application/json',
                     'access-token': localStorage.getItem('accessToken')
                 }
             });
-        if (response.data.code === 453) {
-            localStorage.clear();
-            window.location.href = "/login"
-        } else
-            setPayments(response.data.payload.data);
+        if (response.status === 200) {
+            if (response.data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(response.data.code===200){
+                if(!response.data.payload.data){
+                    setPayments([]);
+                }else{
+                setPayments(response.data.payload.data);}
+            }else{
+                // alert(response.data.message);
+                console.log(response.data.message);
+            }
+        } else {
+            setPayments([])
+        }
+
+
     }
 
     const getMessages = async () => {
@@ -145,11 +235,21 @@ const Dashboard = ({ auth, ...rest }) => {
                     'access-token': localStorage.getItem('accessToken')
                 },
             });
-        if (response.data.code === 453) {
-            localStorage.clear();
-            window.location.href = "/login"
+        if (response.status === 200) {
+            if (response.data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(response.data.code===200){
+                if(!response.data.payload.data){
+                    setMessages([]); 
+                }else{
+                setMessages(response.data.payload.data);}
+            }else{
+                // alert(response.data.message);
+                console.log(response.data.message);
+            }
         } else {
-            setMessages(response.data.payload.data);
+            setMessages([])
         }
     }
 
@@ -165,9 +265,18 @@ const Dashboard = ({ auth, ...rest }) => {
             if (response.data.code === 453) {
                 localStorage.clear();
                 window.location.href = "/login"
-            } else {
-                setTenants(response.data.payload.data);
+            } else if(response.data.code===200){
+                if(!response.data.payload.data){
+                    setTenants([]);
+                }else{
+                setTenants(response.data.payload.data);}
+            }else{
+                setTenants([]);
+                // alert(response.data.message);
+                console.log(response.data.message);
             }
+        }else{
+            setTenants([]);
         }
     }
 
@@ -189,11 +298,31 @@ const Dashboard = ({ auth, ...rest }) => {
             if (response.data.code === 453) {
                 localStorage.clear();
                 window.location.href = "/login"
-            } else {
-                getHouses().then(result => console.log(result));
+            } else if(response.data.code===200){
+                await swal("Success", response.data.message, "success", {
+                    buttons: false,
+                    timer: 2000
+                }).then(() => {
+                    getHouses().then(result => console.log(result));
+                });
+                
+            }else{
+                await swal("Error", response.data.message, "error", {
+                    buttons: false,
+                    timer: 2000
+                }).then(() => {
+                 console.log(response.data.message);
+                });
+                // alert(response.data.message);
             }
         } else {
-            alert("Error deleting house");
+            await swal("Error", "Error deleting house", "error", {
+                buttons: false,
+                timer: 2000
+            }).then(() => {
+             console.log("Error deleting house");
+            });
+            // alert("Error deleting house");
         }
     }
 
@@ -211,8 +340,11 @@ const Dashboard = ({ auth, ...rest }) => {
             if (response.data.code === 453) {
                 localStorage.clear();
                 window.location.href = "/login"
-            } else {
+            } else if(response.data.code===200){
                 getPayments().then(result => console.log(result));
+                alert(response.data.message);
+            }else{
+                alert(response.data.message);
             }
         } else {
             alert("Error deleting payment");
@@ -230,7 +362,15 @@ const Dashboard = ({ auth, ...rest }) => {
         const response = await fetch(`http://localhost/communications/${id}`, params);
         const data = await response.json();
         if (data.status === 200) {
-            getMessages().then(result => console.log(result));
+            if (response.data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(response.data.code===200){
+                getMessages().then(result => console.log(result));
+                alert(response.data.message);
+            }else{
+                alert(response.data.message);
+            }
         } else {
             alert("Error deleting message");
         }
@@ -251,8 +391,12 @@ const Dashboard = ({ auth, ...rest }) => {
             if (response.data.code === 453) {
                 localStorage.clear();
                 window.location.href = "/login"
-            } else {
+            } else if(response.data.code===200){
                 getUsers().then(result => console.log(result));
+                alert(response.data.message);
+            }else{
+                // alert(response.data.message);
+                console.log(response.data.message);
             }
         } else {
             alert("Error deleting user");
@@ -265,12 +409,12 @@ const Dashboard = ({ auth, ...rest }) => {
     }
 
     useEffect(() => {
-        getHouses().then(result=>console.log(result));
-        getUsers().then(result=>console.log(result));
-        getPayments().then(result=>console.log(result));
-        getMessages().then(result=>console.log(result));
-        getTenants().then(result=>console.log(result));
-    }, [houses, setHouses, users, setUsers, payments, setPayments, messages, setMessages, tenants, setTenants, getHouses, getUsers, getPayments, getMessages, getTenants]);
+        getHouses().then(() => console.log("getHouses promise resolved"));
+        getUsers().then(() => console.log("getUsers promise resolved"));
+        getPayments().then(() => console.log("getPayments promise resolved"));
+        getMessages().then(() => console.log("getMessages promise resolved"));
+        getTenants().then(() => console.log("getTenants promise resolved"));
+    }, []);
 
     return (
         <div className={"flex max-h-full"}>
@@ -294,7 +438,7 @@ const Dashboard = ({ auth, ...rest }) => {
                     <hr className="h-px my-8 ml-10 mr-10 border-0 dark:bg-gray-700" />
                     <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
                         <div className={"users flex flex-col rounded mt-3 w-2/4"}>
-                            <h2 className={"bg-white text-xl ml-5 font-bold"}>Tenants</h2>
+                            <h2 className={"bg-white text-xl ml-5 font-bold"}>Users</h2>
                             <Table data={users} editCallback={editUser} deleteCallback={deleteUser} />
                         </div>
                         <div className={"houses flex flex-col mt-3 rounded w-2/4"}>

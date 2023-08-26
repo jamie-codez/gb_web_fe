@@ -24,9 +24,14 @@ const PaymentItemPage = () => {
         if (response.status === 200) {
             const data = await response.json();
             if (data.status === 453) {
+                localStorage.clear();
                 return navigate("/login");
+            }else if(data.status===200){
+                setPayment(data.payload);
+            }else{
+                alert(data.message);
+                setPayment({});
             }
-            setPayment(data.payload);
         } else {
             setPayment({});
         }
@@ -35,7 +40,7 @@ const PaymentItemPage = () => {
 
     useEffect(() => {
         if (id) {
-            getPayment(id).then(result => console.log(result));
+            getPayment(id).then(() => console.log("getPayment promise resolved"));
         }
     }, [getPayment, id, payment, setPayment]);
     return (

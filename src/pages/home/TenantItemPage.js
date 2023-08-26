@@ -20,20 +20,26 @@ const TenantItemPage = () => {
                 "Content-Type": "application/json"
             }
         };
-        const response = await fetch("http://localhost/users/1", params);
+        const response = await fetch(`http://localhost/tenants/${id}`, params);
         if (response.status === 200) {
             const data = await response.json();
             if (data.status === 453) {
+                localStorage.clear();
                 return navigate("/login");
+            }else if(data.status===200){
+                setTenant(data.payload);
+            }else{
+                alert(data.message);
+                setTenant({});
             }
-            setTenant(data.payload);
+            
         } else {
             setTenant({});
         }
     }
     useEffect(() => {
         if (id) {
-            getTenant(id).then(response=>console.log(response));
+            getTenant(id).then(()=>console.log("getTenant Promise resolved"));
         }
     }, [tenant, setTenant, id, getTenant]);
     return (

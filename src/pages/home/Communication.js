@@ -14,9 +14,29 @@ const Communications = () => {
         headers: {'access-token': localStorage.getItem('accessToken')}
     });
     const getCommunications = async () => {
-        const response = await client.get("/communications/1");
-        const data = await response.data;
-        setCommunications(data.payload.data);
+        const params = {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': localStorage.getItem('accessToken')
+            }
+        }
+
+        const response = await fetch("http://localhost/communications/1", params);
+        if (response.status === 200) {
+            const data = await response.json();
+            if (data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(data.code===200) {
+                setCommunications(data.payload.data);
+            }else{
+                setCommunications([]);
+                alert(data.message);
+            }
+        } else {
+            setCommunications([])
+        }
     }
 
     const handleDeleteCommunication = async (id) => {
@@ -29,7 +49,17 @@ const Communications = () => {
         }
         const response = await fetch(`http://localhost/communications/${id}`, params)
         if (response.status === 200) {
-            getCommunications().then(result=>console.log(result));
+            const data = await response.json();
+            if (data.code===200){
+                getCommunications().then(()=>console.log("getCommunication promise resolved"));
+            } else if(data.code===453){
+                localStorage.clear();
+                navigate("/login");
+            }else{
+                getCommunications().then(()=>console.log("getCommunication promise resolved"));
+            }
+        }else{
+            alert("Something went wrong!")
         }
     }
 
@@ -37,7 +67,7 @@ const Communications = () => {
         navigate("/dashboard/communications/new");
     }
     useEffect(() => {
-        getCommunications().then(result=>console.log(result));
+        getCommunications().then(()=>console.log("getCommunication promise resolved"));
     }, [communications, getCommunications, setCommunications]);
     return (
         <div className={"flex"}>

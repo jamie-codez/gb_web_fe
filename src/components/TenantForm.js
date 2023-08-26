@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import swal from "sweetalert";
 
@@ -35,6 +35,12 @@ const TenantForm = ({tenantData}) => {
             alert("Error")
         }
     }
+     useEffect(()=>{
+        if(tenantData){
+            setClientEmail(tenantData.email);
+            setHouseNumber(tenantData.houseNumber);
+        }
+     },[clientEmail,setClientEmail,houseNumber,setHouseNumber]);
     return (
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {
@@ -42,29 +48,29 @@ const TenantForm = ({tenantData}) => {
                 setLoading(true);
             }}>
                 <div className="relative z-0 w-full mb-6 group">
-                    <input type="email" name="floating_email" id="floating_email"
+                    <input type="email" name="floating_email" id="floating_email" value={clientEmail} onChange={(e)=>{setClientEmail(e.target.value)}}
                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                            placeholder=" " required/>
                     <label htmlFor="floating_email"
-                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
+                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tenant Email
                         address</label>
                 </div>
                 <div className="relative z-0 w-full mb-6 group">
-                    <input type="password" name="floating_password" id="floating_password"
+                    <input type="text" name="floating_password" id="floating_password" value={houseNumber} onChange={(e)=>{setHouseNumber(e.target.value)}}
                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                            placeholder=" " required/>
                     <label htmlFor="floating_password"
-                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                           className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">House Number</label>
                 </div>
-                <div className="relative z-0 w-full mb-6 group">
+                {/* <div className="relative z-0 w-full mb-6 group">
                     <input type="password" name="repeat_password" id="floating_repeat_password"
                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                            placeholder=" " required/>
                     <label htmlFor="floating_repeat_password"
                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
                         password</label>
-                </div>
-                <div className="grid md:grid-cols-2 md:gap-6">
+                </div> */}
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                         <input type="text" name="floating_first_name" id="floating_first_name"
                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -81,8 +87,8 @@ const TenantForm = ({tenantData}) => {
                                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last
                             name</label>
                     </div>
-                </div>
-                <div className="grid md:grid-cols-2 md:gap-6">
+                </div> */}
+                {/* <div className="grid md:grid-cols-2 md:gap-6">
                     <div className="relative z-0 w-full mb-6 group">
                         <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone"
                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -106,7 +112,7 @@ const TenantForm = ({tenantData}) => {
                             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             aria-describedby="user_avatar_help" id="user_avatar" type="file"/>
                     </div>
-                </div>
+                </div> */}
                 <button type="submit" onClick={e => {
                     handleButtonClick(e).then(result => swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r)));
                     setLoading(true);

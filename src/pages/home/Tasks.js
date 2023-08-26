@@ -19,7 +19,15 @@ const Tasks = () => {
         const response = await fetch("http://localhost/tasks/1", params);
         if (response.status === 200) {
             const data = await response.json();
-            setTasks(data.payload.data);
+            if (data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(data.code===200) {
+                setTasks(data.payload.data);
+            }else{
+                setTasks([]);
+                alert(data.message);
+            }
         } else {
             setTasks([]);
         }
@@ -38,12 +46,23 @@ const Tasks = () => {
         }
         const response = await fetch(`http://localhost/tasks/${id}`, params)
         if (response.status === 200) {
-            getTasks().then(result => console.log(result));
+            const data= await response.json();
+            if(data.code===200){
+                getTasks().then(response => console.log(response));
+            }else if(data.code===453){
+                localStorage.clear();
+                window.location.href="/login";
+            }else{
+                alert(data.message);
+            }
+            
+        }else{
+            alert("Error deleting user");
         }
     }
 
     useEffect(() => {
-        getTasks().then(r => console.log(r));
+        getTasks().then(() => console.log("getTasks promise resolved"));
     }, [tasks, setTasks]);
     return (
         <div className={"flex"}>

@@ -20,10 +20,15 @@ const Tenants = () => {
         const response = await fetch("http://localhost/tenants/1", params);
         if (response.status === 200) {
             const data = await response.json();
-            if (data.status === 453) {
-                return navigate("/login");
+            if (data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login"
+            } else if(data.code===200) {
+                setTenants(data.payload.data);
+            }else{
+                setTenants([]);
+                alert(data.message);
             }
-            setTenants(data.payload.data);
         } else {
             setTenants([]);
         }
@@ -39,7 +44,18 @@ const Tenants = () => {
         };
         const response = await fetch(`http://localhost/tenants/${id}`, params);
         if (response.status === 200) {
-            getTenants().then(response=>console.log(response));
+            const data= await response.json();
+            if(data.code===200){
+                getTenants().then(()=>console.log("getTenants promise resolved"));
+            }else if(data.code===453){
+                localStorage.clear();
+                window.location.href="/login";
+            }else{
+                alert(data.message);
+            }
+            
+        }else{
+            alert("Error deleting user");
         }
     }
 
@@ -52,7 +68,7 @@ const Tenants = () => {
     }
 
     useEffect(() => {
-        getTenants().then(result=>console.log(result));
+        getTenants().then(()=>console.log("getTenants promise resolved"));
     }, [tenants, setTenants]);
     return (
         <div className={"flex"}>

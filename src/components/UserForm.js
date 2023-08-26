@@ -1,7 +1,8 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import swal from "sweetalert";
 
 const UserForm = ({ userData }) => {
+    const [user, setUser] =useState({});
     const [username, setUsername] = useState(userData ? userData.username : "");
     const [email, setEmail] = useState(userData ? userData.email : "");
     const [firstName, setFirstName] = useState(userData ? userData.firstName : "");
@@ -61,6 +62,17 @@ const UserForm = ({ userData }) => {
             setLoading(false);
         }
     }
+
+    useEffect(()=>{
+        if(userData){
+            setFirstName(userData.firstName);
+            setLastName(userData.lastName);
+            setEmail(userData.email);
+            setPhone(userData.phone);
+            setIdNumber(userData.idNumber);
+            setUsername(userData.username);
+        }
+    },[firstName,setFirstName,lastName,setLastName,email,setEmail,phone,setPhone,idNumber.setIdNumber,username,setUsername]);
 
     return (
         <div className={"account_form mt-10"}>

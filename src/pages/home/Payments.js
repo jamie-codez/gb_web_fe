@@ -23,8 +23,11 @@ const Payments = () => {
             if (data.code === 453) {
                 localStorage.clear();
                 window.location.href = "/login"
-            } else {
+            } else if(data.code===200) {
                 setPayments(data.payload.data);
+            }else{
+                setPayments([]);
+                alert(data.message);
             }
         } else {
             setPayments([]);
@@ -40,7 +43,18 @@ const Payments = () => {
         }
         const response = await fetch(`http://localhost/payments/${id}`, params);
         if (response.status === 200) {
-            getPayments().then(result => console.log(result));
+            const data= await response.json();
+            if(data.code===200){
+                getPayments().then(response => console.log(response));
+            }else if(data.code===453){
+                localStorage.clear();
+                window.href="/login";
+            }else{
+                alert(data.message);
+            }
+            
+        }else{
+            alert("Error deleting user");
         }
     }
 
@@ -50,7 +64,7 @@ const Payments = () => {
     }
 
     useEffect(() => {
-        getPayments().then(result => console.log(result));
+        getPayments().then(() => console.log("getPayments promise resolved"));
     }, [payments, setPayments])
     return (
         <div className={"flex"}>

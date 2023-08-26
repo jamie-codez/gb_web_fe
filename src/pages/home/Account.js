@@ -4,11 +4,12 @@ import Footer from "../../components/Footer";
 import UserForm from "../../components/UserForm";
 import "../../index.css"
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
 
 const Account = () => {
     const [user, setUser] = useState(null);
     const { id } = useParams();
+    const navigate = useNavigate();
     console.log(id);
 
     const getUser = async (id) => {
@@ -21,13 +22,17 @@ const Account = () => {
         }
         const response = await fetch(`http://localhost/user/${id}`, params);
         if (response.status === 200) {
-            const jsonData = await response.json();
-            if (!jsonData.payload) {
-                alert("User not found");
-                return;
+            const data = await response.json();
+            if (data.status === 453) {
+                localStorage.clear();
+                return navigate("/login");
+            }else if(data.status===200){
+                setUser(data.payload);
+            }else{
+                setUser({});
             }
-            console.log(jsonData.payload);
-            setUser(jsonData.payload);
+        } else {
+            setUser({});
         }
     };
 

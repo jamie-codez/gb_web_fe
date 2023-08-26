@@ -13,8 +13,14 @@ const HouseForm = ({houseData}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        let verb;
+        if (houseData) {
+            verb = "PUT";
+        } else {
+            verb = "POST";
+        }
         const params = {
-            method: 'POST',
+            method: verb,
             headers: {
                 "access-token": localStorage.getItem("accessToken"),
                 "Content-Type": "application/json"
@@ -27,17 +33,22 @@ const HouseForm = ({houseData}) => {
                 occupied: occupied
             })
         };
-        const response = await fetch(`http://localhost/houses`, params);
+        let url;
+        if (houseData) {
+            url = `http://localhost/houses/${houseData.id}`;
+        } else {
+            url = `http://localhost/houses`;
+        }
+        const response = await fetch(url, params);
         if (response.status === 200) {
             const data = await response.json();
             if (data.status === 453) {
                 return navigate("/login");
+            }else if(data.status===200){
+                swal("Success!", "House has been created successfully!", "success").then(r => console.log(r))
+            }else{
+                swal("Success!", "House has been created successfully!", "success").then(r => console.log(r))
             }
-            setHouseNumber(data.payload.houseNumber);
-            setRent(data.payload.rent);
-            setDeposit(data.payload.deposit);
-            setFloor(data.payload.floor);
-            setOccupied(data.payload.occupied);
         } else {
             alert("An error occurred try again");
         }
@@ -46,9 +57,8 @@ const HouseForm = ({houseData}) => {
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {
                 handleSubmit(e).then(response => {
-                    swal("Success!", "Communication has been created successfully!", "success")
-                        .then(r => console.log(r))
-
+                    swal("Success!", "House has been created successfully!", "success")
+                        .then(() => console.log("promise resolved"))
                 });
                 setLoading(true);
             }}>
@@ -108,29 +118,12 @@ const HouseForm = ({houseData}) => {
                     <label htmlFor="floating_company"
                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Vacant</label>
                 </form>
-                {/*<div className="grid md:grid-cols-2 md:gap-6">*/}
-                {/*    <div className="relative z-0 mb-6 group">*/}
-                {/*        <input type="radio" name="floating_phone"*/}
-                {/*               id="floating_phone"*/}
-                {/*               className="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"*/}
-                {/*               placeholder=" " required/>*/}
-                {/*        <label htmlFor="floating_phone"*/}
-                {/*               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Occupied</label>*/}
-                {/*    </div>*/}
-                {/*    <div className="relative z-0 mb-6 group">*/}
-                {/*        <input type="radio" name="floating_company" id="floating_company"*/}
-                {/*               className="block py-2.5 px-0 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"*/}
-                {/*               placeholder=" " required/>*/}
-                {/*        <label htmlFor="floating_company"*/}
-                {/*               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Vacant</label>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <button type="submit" onClick={e => {
-                    handleSubmit(e).then(result => swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r)));
+                    handleSubmit(e).then(() => console.log("promise resolved"));
                     setLoading(true)
                 }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
-                    Update
-                < /button>
+                    {houseData ? "Update" : "Create"}
+                </button>
             </form>
         </div>
     )

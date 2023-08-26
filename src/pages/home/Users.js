@@ -22,7 +22,15 @@ const Users = () => {
             if (response.status === 200) {
                 const jsonData = await response.json();
                 console.log(jsonData);
-                setUsers(jsonData.payload.data);
+                if (jsonData.code === 200) {
+                    setUsers(jsonData.payload.data);
+                } else if (jsonData.code === 453) {
+                    localStorage.clear();
+                    window.location.href = "/login"
+                } else {
+                    setUsers([]);
+                }
+
             } else {
                 setUsers([]);
             }
@@ -41,7 +49,18 @@ const Users = () => {
         }
         const response = await fetch(`http://localhost/users/${id}`, params);
         if (response.status === 200) {
-            getUsers().then(response=>console.log(response));
+            const data = await response.json();
+            if (data.code === 200) {
+                getUsers().then(response => console.log(response));
+            } else if (data.code === 453) {
+                localStorage.clear();
+                window.location.href = "/login";
+            } else {
+                alert(data.message);
+            }
+
+        } else {
+            alert("Error deleting user");
         }
     }
 
@@ -54,7 +73,7 @@ const Users = () => {
         navigate("/dashboard/users/new")
     }
     useEffect(() => {
-        getUsers().then(result=>console.log(result));
+        getUsers().then(() => console.log("getUser promise resolved"));
     }, [users, setUsers]);
     return (
         <div className={"flex"}>
