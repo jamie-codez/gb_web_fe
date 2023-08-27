@@ -1,9 +1,10 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
-import { Table } from "./Dashboard";
-import { useEffect, useState } from "react";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
+import Table from "../../components/general/Table";
+import React,{ useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TenantTable from "../../components/tenant/TenantTable";
 
 const Tenants = () => {
     const navigate = useNavigate();
@@ -82,7 +83,7 @@ const Tenants = () => {
                                 onClick={handleAddNewTenantClick}>Add New Tenant
                             </button>
                         </div>
-                        <Table data={tenants} editCallback={editTenant} deleteCallback={deleteTenant} />
+                        <TenantTable data={tenants} editCallback={editTenant} deleteCallback={deleteTenant} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>

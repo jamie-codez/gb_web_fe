@@ -1,3 +1,6 @@
+import React from 'react';
+
+
 const NoData = ()=>{
     return(
         <section className="bg-white dark:bg-gray-900">

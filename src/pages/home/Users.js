@@ -1,7 +1,7 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
-import { Table } from "./Dashboard";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
+import Table from "../../components/general/Table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -74,7 +74,7 @@ const Users = () => {
     }
     useEffect(() => {
         getUsers().then(() => console.log("getUser promise resolved"));
-    }, [users, setUsers]);
+    }, [users]);
     return (
         <div className={"flex"}>
             <SideBar />

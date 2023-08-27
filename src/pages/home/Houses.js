@@ -1,51 +1,18 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
-import { HouseRow, Table } from "./Dashboard";
-import { useEffect, useState } from "react";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
+import HouseTable from "../../components/house/HouseTable";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
-export const HouseTable = ({ data, editCallback, deleteCallback }) => {
-    return (
-        <div>
-            {
-                data.length === 0 ? <div className={"flex flex-col justify-center items-center"}>
-                    <h2 className={"text-xl font-bold mt-20"}>No data available</h2>
-                </div> : <div className={"table"}>
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    Name
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Phone
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Status
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((userData, index) => {
-                                return <HouseRow user={userData} editCallback={editCallback} deleteCallback={deleteCallback} />
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </div>
-    );
-}
+
 
 const Houses = () => {
     const [houses, setHouses] = useState([]);
     const navigate = useNavigate();
 
-    const getHouses = async () => {
+    const getHouses = useCallback(async () => {
         const params = {
             method: "GET",
             headers: {
@@ -61,6 +28,10 @@ const Houses = () => {
                 localStorage.clear();
                 window.location.href = "/login"
             } else if (data.code === 200) {
+                if (data.payload.data.length === 0) {
+                    setHouses([]);
+                    swal("No houses", "No houses found", "info");
+                }
                 setHouses(data.payload.data);
             } else {
                 setHouses([]);
@@ -69,7 +40,7 @@ const Houses = () => {
         } else {
             setHouses([]);
         }
-    }
+    },[setHouses])
 
     const handleEditHouse = (id) => {
         navigate(`/dashboard/houses/${id}`);
@@ -107,7 +78,7 @@ const Houses = () => {
 
     useEffect(() => {
         getHouses().then(() => console.log("getHouses promise resolved"));
-    });
+    }, [houses, getHouses, setHouses]);
     return (
         <div className={"flex"}>
             <SideBar />
@@ -118,7 +89,7 @@ const Houses = () => {
                         <div className={"flex flex-row mt-5 justify-end mr-20"}>
                             <button className={"bg-purple-700 p-2 rounded-lg text-white mb-5"} onClick={handleNavigate}>Add New House</button>
                         </div>
-                        <Table data={houses} editCallback={handleEditHouse} deleteCallback={handleDeleteHouse} />
+                        <HouseTable data={houses} editCallback={handleEditHouse} deleteCallback={handleDeleteHouse} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>

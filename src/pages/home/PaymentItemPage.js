@@ -1,18 +1,17 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
 import "../../index.css"
-import {useEffect, useState} from "react";
-import PaymentForm from "../../components/PaymentForm";
-import {useNavigate, useParams} from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import PaymentForm from "../../components/payment/PaymentForm";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PaymentItemPage = () => {
     const [payment, setPayment] = useState({});
     const navigate = useNavigate();
     const { id } = useParams();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getPayment = async (id) => {
+    const getPayment = useCallback(async (id) => {
         const params = {
             method: 'GET',
             headers: {
@@ -26,16 +25,16 @@ const PaymentItemPage = () => {
             if (data.status === 453) {
                 localStorage.clear();
                 return navigate("/login");
-            }else if(data.status===200){
+            } else if (data.status === 200) {
                 setPayment(data.payload);
-            }else{
+            } else {
                 alert(data.message);
                 setPayment({});
             }
         } else {
             setPayment({});
         }
-    }
+    }, [setPayment, navigate])
 
 
     useEffect(() => {

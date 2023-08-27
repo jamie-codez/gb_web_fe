@@ -1,9 +1,11 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
-import {Table} from "./Dashboard";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
+import Table from "./Dashboard";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import swal from "sweetalert";
+import PaymentTable from "../../components/payment/PaymentTable";
 
 const Payments = () => {
     const navigate = useNavigate();
@@ -50,11 +52,12 @@ const Payments = () => {
                 localStorage.clear();
                 window.href="/login";
             }else{
+                swal("Success", data.message, "success");
                 alert(data.message);
             }
             
         }else{
-            alert("Error deleting user");
+            swal("Error", "An error occurred try again", "error");
         }
     }
 
@@ -78,7 +81,7 @@ const Payments = () => {
                                 onClick={handleAddNewPaymentClick}>Add New Payment
                             </button>
                         </div>
-                        <Table data={payments} deleteCallback={handleDeletePayment} />
+                        <PaymentTable data={payments} deleteCallback={handleDeletePayment} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>

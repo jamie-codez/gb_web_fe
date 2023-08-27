@@ -1,17 +1,16 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
 import "../../index.css"
-import {useEffect, useState} from "react";
-import TaskForm from "../../components/TaskForm";
+import {useEffect, useState,useCallback} from "react";
+import TaskForm from "../../components/task/TaskForm";
 import {useNavigate, useParams} from "react-router-dom";
 
 const TaskItemPage = () => {
     const [task, setTask] = useState({});
     const navigate = useNavigate();
     const { id } = useParams();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getTask = async () => {
+    const getTask = useCallback(async () => {
         const params = {
             method: 'GET',
             headers: {
@@ -29,7 +28,7 @@ const TaskItemPage = () => {
         } else {
             setTask({});
         }
-    }
+    },[id, navigate])
     useEffect(() => {
         getTask().then(() => console.log("getTask promise resolved"));
     }, [task, setTask, getTask]);

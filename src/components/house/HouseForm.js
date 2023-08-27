@@ -1,13 +1,13 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import swal from "sweetalert";
 
 const HouseForm = ({houseData}) => {
-    const [houseNumber, setHouseNumber] = useState(houseData ? houseData.houseNumber : "");
-    const [rent, setRent] = useState(houseData ? houseData.rent : "");
-    const [deposit, setDeposit] = useState(houseData ? houseData.deposit : "");
-    const [floor, setFloor] = useState(houseData ? houseData.floor : "");
-    const [occupied, setOccupied] = useState(houseData ? houseData.occupied : "");
+    const [houseNumber, setHouseNumber] = useState("");
+    const [rent, setRent] = useState("");
+    const [deposit, setDeposit] = useState("");
+    const [floor, setFloor] = useState("");
+    const [occupied, setOccupied] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const HouseForm = ({houseData}) => {
                 houseNumber: houseNumber,
                 rent: rent,
                 deposit: deposit,
-                floor: floor,
+                floorNumber: floor,
                 occupied: occupied
             })
         };
@@ -44,15 +44,29 @@ const HouseForm = ({houseData}) => {
             const data = await response.json();
             if (data.status === 453) {
                 return navigate("/login");
-            }else if(data.status===200){
+            }else if(data.code===201 || data.code===200){
                 swal("Success!", "House has been created successfully!", "success").then(r => console.log(r))
+                setLoading(false);
+                navigate("/dashboard/houses");
             }else{
-                swal("Success!", "House has been created successfully!", "success").then(r => console.log(r))
+                swal("Error!", data.message, "error").then(r => console.log(r))
+                setLoading(false);
             }
         } else {
             alert("An error occurred try again");
+            setLoading(false);
         }
     }
+
+    useEffect(() => {
+        if (houseData) {
+            setHouseNumber(houseData.houseNumber);
+            setRent(houseData.rent);
+            setDeposit(houseData.deposit);
+            setFloor(houseData.floor);
+            setOccupied(houseData.occupied);
+        }
+    }, [houseData,houseNumber,rent,deposit,floor,occupied, setHouseNumber, setRent, setDeposit, setFloor, setOccupied]);
     return (
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {

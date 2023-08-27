@@ -1,9 +1,9 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
 import "../../index.css"
 import {useEffect, useState} from "react";
-import CommunicationForm from "../../components/CommunicationForm";
+import CommunicationForm from "../../components/communication/CommunicationForm";
 import {useNavigate, useParams} from "react-router-dom";
 
 const CommunicationItemPage = () => {

@@ -1,18 +1,17 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
 import "../../index.css"
-import {useEffect, useState} from "react";
-import HouseForm from "../../components/HouseForm";
-import {useNavigate, useParams} from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import HouseForm from "../../components/house/HouseForm";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HouseItemPage = () => {
     const [house, setHouse] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getHouse = async (id) => {
+    const getHouse = useCallback(async (id) => {
         const params = {
             method: 'GET',
             headers: {
@@ -26,20 +25,20 @@ const HouseItemPage = () => {
             if (data.status === 453) {
                 localStorage.clear();
                 return navigate("/login");
-            }else if(data.status===200){
+            } else if (data.status === 200) {
                 setHouse(data.payload);
-            }else{
+            } else {
                 alert(data.message);
                 setHouse({});
             }
         } else {
             setHouse({});
         }
-    }
+    }, [setHouse, navigate])
 
     useEffect(() => {
         if (id) {
-            getHouse(id).then(()=>console.log("getHouse promise resolved"));
+            getHouse(id).then(() => console.log("getHouse promise resolved"));
         }
     }, [getHouse, house, id, setHouse]);
     return (

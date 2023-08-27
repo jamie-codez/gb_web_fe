@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { IoIosNotificationsOutline, IoIosSettings } from "react-icons/io";
 import { IoLanguageOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";

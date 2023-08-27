@@ -9,7 +9,7 @@ import {BiMessageDetail} from "react-icons/bi";
 import {BiTask} from "react-icons/bi";
 import {SiSoundcharts} from "react-icons/si";
 import {MdOutlineAccountCircle} from "react-icons/md";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 

@@ -1,18 +1,17 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
 import "../../index.css"
-import {useEffect, useState} from "react";
-import TenantForm from "../../components/TenantForm";
-import {useNavigate, useParams} from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import TenantForm from "../../components/tenant/TenantForm";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TenantItemPage = () => {
     const [tenant, setTenant] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getTenant = async () => {
+    const getTenant = useCallback(async () => {
         const params = {
             method: 'GET',
             headers: {
@@ -26,20 +25,21 @@ const TenantItemPage = () => {
             if (data.status === 453) {
                 localStorage.clear();
                 return navigate("/login");
-            }else if(data.status===200){
+            } else if (data.status === 200) {
                 setTenant(data.payload);
-            }else{
+            } else {
                 alert(data.message);
                 setTenant({});
             }
-            
+
         } else {
             setTenant({});
         }
-    }
+    }, [setTenant, navigate, id]);
+
     useEffect(() => {
         if (id) {
-            getTenant(id).then(()=>console.log("getTenant Promise resolved"));
+            getTenant(id).then(() => console.log("getTenant Promise resolved"));
         }
     }, [tenant, setTenant, id, getTenant]);
     return (
@@ -54,7 +54,8 @@ const TenantItemPage = () => {
                     <Footer />
                 </div>
             </div>
-        </div>)
+        </div>
+    )
 }
 
 export default TenantItemPage;

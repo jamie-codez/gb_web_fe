@@ -1,9 +1,9 @@
-import SideBar from "../../components/SideBar";
-import NavHeader from "../../components/NavHeader";
-import Footer from "../../components/Footer";
-import UserForm from "../../components/UserForm";
+import SideBar from "../../components/navigation/SideBar";
+import NavHeader from "../../components/navigation/NavHeader";
+import Footer from "../../components/navigation/Footer";
+import UserForm from "../../components/user/UserForm";
 import "../../index.css"
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useParams,useNavigate} from "react-router-dom";
 
 const Account = () => {
@@ -12,7 +12,7 @@ const Account = () => {
     const navigate = useNavigate();
     console.log(id);
 
-    const getUser = async (id) => {
+    const getUser = useCallback(async(id) => {
         const params = {
             method: 'GET',
             headers: {
@@ -34,13 +34,13 @@ const Account = () => {
         } else {
             setUser({});
         }
-    };
+    },[setUser,navigate]);
 
     useEffect(() => {
         if (id) {
             getUser(id).then(result => console.log(result));
         }
-    }, [user, setUser, id]);
+    }, [user, setUser, id,getUser]);
 
 
     return (
