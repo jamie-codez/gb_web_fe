@@ -1,8 +1,7 @@
 import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
-import Table from "./Dashboard";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import PaymentTable from "../../components/payment/PaymentTable";
@@ -11,7 +10,7 @@ const Payments = () => {
     const navigate = useNavigate();
     const [payments, setPayments] = useState([]);
 
-    const getPayments = async () => {
+    const getPayments = useCallback(async () => {
         const params = {
             method: 'GET',
             headers: {
@@ -41,7 +40,7 @@ const Payments = () => {
         } else {
             setPayments([]);
         }
-    }
+    },[setPayments])
     const handleDeletePayment = async (id) => {
         const params = {
             method: 'DELETE',
@@ -73,7 +72,7 @@ const Payments = () => {
 
     useEffect(() => {
         getPayments().then(() => console.log("getPayments promise resolved"));
-    }, [ setPayments])
+    }, [ payments,getPayments,setPayments])
     return (
         <div className={"flex"}>
             <SideBar />

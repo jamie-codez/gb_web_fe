@@ -1,8 +1,7 @@
 import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
-import Table from "../../components/general/Table";
-import React,{ useEffect, useState } from "react";
+import React,{ useEffect, useState,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import TenantTable from "../../components/tenant/TenantTable";
 
@@ -10,7 +9,7 @@ const Tenants = () => {
     const navigate = useNavigate();
     const [tenants, setTenants] = useState([]);
 
-    const getTenants = async () => {
+    const getTenants = useCallback(async () => {
         const params = {
             method: 'GET',
             headers: {
@@ -33,7 +32,7 @@ const Tenants = () => {
         } else {
             setTenants([]);
         }
-    }
+    },[setTenants])
 
     const deleteTenant = async (id) => {
         const params = {
@@ -70,7 +69,7 @@ const Tenants = () => {
 
     useEffect(() => {
         getTenants().then(()=>console.log("getTenants promise resolved"));
-    }, [tenants, setTenants]);
+    }, [tenants, getTenants,setTenants]);
     return (
         <div className={"flex"}>
             <SideBar />

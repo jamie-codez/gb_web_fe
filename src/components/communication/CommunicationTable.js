@@ -1,5 +1,5 @@
 import React from "react";
-import Row from "../../pages/home/Dashboard";
+import CommunicationRow from "./CommunicationRow";
 
 
 const CommunicationTable = ({ data, editCallback, deleteCallback }) => {
@@ -8,18 +8,21 @@ const CommunicationTable = ({ data, editCallback, deleteCallback }) => {
             {
                 data.length === 0 ? <div className={"flex flex-col justify-center items-center"}>
                     <h2 className={"text-xl font-bold mt-20"}>No data available</h2>
-                </div> : <div className={"table"}>
+                </div> : <div className={"table w-full"}>
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Name
+                                    Title
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Phone
+                                    Description
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Status
+                                    Schedule Date
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Created On
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Action
@@ -27,8 +30,8 @@ const CommunicationTable = ({ data, editCallback, deleteCallback }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((userData, index) => {
-                                return <Row user={userData} editCallback={editCallback} deleteCallback={deleteCallback} />
+                            {data.map((communication, index) => {
+                                return <CommunicationRow communication={communication} editCallback={editCallback} deleteCallback={deleteCallback} />
                             })}
                         </tbody>
                     </table>

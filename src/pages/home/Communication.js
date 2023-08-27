@@ -1,10 +1,11 @@
 import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
-import Table  from "../../components/general/Table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
+import CommunicationTable from "../../components/communication/CommunicationTable";
+import swal from "sweetalert";
 
 const Communications = () => {
     const navigate = useNavigate();
@@ -36,6 +37,10 @@ const Communications = () => {
         }
     }, [setCommunications])
 
+    const handleEditCommunication = (id) => {
+        navigate(`/dashboard/communications/${id}`);
+    }
+
     const handleDeleteCommunication = async (id) => {
         const params = {
             method: 'DELETE',
@@ -56,16 +61,19 @@ const Communications = () => {
                 getCommunications().then(() => console.log("getCommunication promise resolved"));
             }
         } else {
-            alert("Something went wrong!")
+            swal("Error", "Something went wrong", "error");
         }
     }
+
 
     const handleAddNewCommunicationClick = () => {
         navigate("/dashboard/communications/new");
     }
+
     useEffect(() => {
         getCommunications().then(() => console.log("getCommunication promise resolved"));
     }, [communications, getCommunications, setCommunications]);
+    
     return (
         <div className={"flex"}>
             <SideBar />
@@ -78,7 +86,7 @@ const Communications = () => {
                                 onClick={handleAddNewCommunicationClick}>Add New Communication
                             </button>
                         </div>
-                        <Table data={communications} deleteCallback={handleDeleteCommunication} />
+                        <CommunicationTable data={communications} editCallback={handleEditCommunication} deleteCallback={handleDeleteCommunication} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>

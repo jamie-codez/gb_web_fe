@@ -2,14 +2,14 @@ import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
 import Table from "../../components/general/Table";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Users = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
 
-    const getUsers = async () => {
+    const getUsers = useCallback(async () => {
         try {
             const params = {
                 method: 'GET',
@@ -37,7 +37,7 @@ const Users = () => {
         } catch (e) {
             console.log(e);
         }
-    }
+    },[setUsers])
 
     const deleteUser = async (id) => {
         const params = {
@@ -74,7 +74,7 @@ const Users = () => {
     }
     useEffect(() => {
         getUsers().then(() => console.log("getUser promise resolved"));
-    }, [users]);
+    }, [users,getUsers,setUsers]);
     return (
         <div className={"flex"}>
             <SideBar />
