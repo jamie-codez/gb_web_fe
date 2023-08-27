@@ -1,9 +1,10 @@
 import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
-import Table from "../../components/general/Table";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
+import TaskTable from "../../components/task/TaskTable";
 
 const Tasks = () => {
     const navigate = useNavigate();
@@ -26,15 +27,19 @@ const Tasks = () => {
                 setTasks(data.payload.data);
             } else {
                 setTasks([]);
-                alert(data.message);
+                swal("Error", data.message, "error");
             }
         } else {
             setTasks([]);
         }
     }, [setTasks])
-    
+
     const handleAddNewTaskClick = () => {
         navigate("/dashboard/tasks/new");
+    }
+
+    const handleEditCallback = (id) => {
+        navigate(`/dashboard/tasks/${id}`);
     }
 
     const handleDeleteCallback = async (id) => {
@@ -58,13 +63,13 @@ const Tasks = () => {
             }
 
         } else {
-            alert("Error deleting user");
+            swal("Error", "Something went wrong", "error");
         }
     }
 
     useEffect(() => {
         getTasks().then(() => console.log("getTasks promise resolved"));
-    }, [tasks, setTasks, getTasks]);
+    }, [tasks, getTasks, setTasks]);
     return (
         <div className={"flex"}>
             <SideBar />
@@ -77,7 +82,7 @@ const Tasks = () => {
                                 onClick={handleAddNewTaskClick}>Add New Task
                             </button>
                         </div>
-                        <Table data={tasks} deleteCallback={handleDeleteCallback} />
+                        <TaskTable data={tasks} editCallback={handleEditCallback} deleteCallback={handleDeleteCallback} />
                     </div>
                 </div>
                 <div className={"align-baseline"}>

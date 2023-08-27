@@ -1,5 +1,5 @@
 import React from "react";
-import PaymentRow from "./PaymentRow";
+import TaskRow from "./TaskRow";
 
 
 const TaskTable = ({ data, editCallback, deleteCallback }) => {
@@ -11,15 +11,21 @@ const TaskTable = ({ data, editCallback, deleteCallback }) => {
                 </div> : <div className={"table w-full"}>
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
+                        <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Index
+                                    Title
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    House Details
+                                    Description
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Occupied
+                                    Schedule Date
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Created On
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Status
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Action
@@ -27,8 +33,8 @@ const TaskTable = ({ data, editCallback, deleteCallback }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((house, index) => {
-                                return <PaymentRow index={index} house={house} editCallback={editCallback} deleteCallback={deleteCallback} />
+                            {data.map((task, index) => {
+                                return <TaskRow index={index} task={task} editCallback={editCallback} deleteCallback={deleteCallback} />
                             })}
                         </tbody>
                     </table>

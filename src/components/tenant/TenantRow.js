@@ -36,9 +36,9 @@ const HouseRow = ({ index, house, editCallback, deleteCallback }) => {
             </td>
             <td className="px-6 py-4">
                 <div className="flex items-center">
-                    {house.occupied ? <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> :
+                    {house.active ? <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> :
                         <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>}
-                    Occupied
+                    Active
                 </div>
             </td>
             <td className="px-6 h-full py-4 flex flex-row items-center justify-center">

@@ -22,7 +22,7 @@ const TenantTable = ({ data, editCallback, deleteCallback }) => {
                                     House Details
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Occupied
+                                    Active
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Action

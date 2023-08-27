@@ -25,7 +25,7 @@ const CommunicationForm = ({taskData}) => {
                 scheduleDate: scheduleDate
             })
         }
-        const response = await fetch(`http://localhost/communications`, params);
+        const response = await fetch(`http://localhost/tasks`, params);
         if (response.status === 200) {
             const data = await response.json();
             if (data.code === 453) {
@@ -34,7 +34,7 @@ const CommunicationForm = ({taskData}) => {
             if (data.code === 200 || data.code === 201) {
                 swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r));
                 setLoading(false);
-                return navigate("/dashboard/communications");
+                return navigate("/dashboard/tasks");
             }else{
                 setLoading(false);
                 return swal("Error!", "Something went wrong!", "error").then(r => console.log(r));
@@ -78,7 +78,7 @@ const CommunicationForm = ({taskData}) => {
                         Date</label>
                 </div>
                 <button type="submit" onClick={e => {
-                    handleSubmit(e).then(() => swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r)));
+                    handleSubmit(e).then(r => console.log(r));
                     setLoading(true)
                 }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
                     {taskData?"Update":"Create"}

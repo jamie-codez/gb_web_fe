@@ -47,9 +47,7 @@ const TenantForm = ({tenantData}) => {
                 setLoading(false);
             }
         } else {
-            setClientEmail("");
-            setHouseNumber("");
-            alert("Error")
+           swal("Error!", "Something went wrong!", "error").then(r => console.log(r));
         }
     }
      useEffect(()=>{
