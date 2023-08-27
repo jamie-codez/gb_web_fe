@@ -16,10 +16,13 @@ const PaymentTable = ({ data, editCallback, deleteCallback }) => {
                                     Index
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    House Details
+                                    Payment Details
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Occupied
+                                    Tenant Details
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Verified
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Action

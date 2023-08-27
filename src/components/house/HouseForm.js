@@ -26,7 +26,7 @@ const HouseForm = ({houseData}) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                houseNumber: houseNumber,
+                houseNumber: houseNumber.toUpperCase(),
                 rent: rent,
                 deposit: deposit,
                 floorNumber: floor,

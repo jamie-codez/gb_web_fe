@@ -2,8 +2,8 @@ import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
 import Table from "./Dashboard";
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import PaymentTable from "../../components/payment/PaymentTable";
 
@@ -25,11 +25,18 @@ const Payments = () => {
             if (data.code === 453) {
                 localStorage.clear();
                 window.location.href = "/login"
-            } else if(data.code===200) {
-                setPayments(data.payload.data);
-            }else{
+            } else if (data.code === 200) {
+                if (!data.payload.data) {
+                    setPayments([]);
+                    console.log("No payments found");
+                } else if (data.payload.data.length === 0) {
+                    console.log("No payments found");
+                } else {
+                    setPayments(data.payload.data);
+                }
+            } else {
                 setPayments([]);
-                alert(data.message);
+                swal("Error", data.message, "error");
             }
         } else {
             setPayments([]);
@@ -45,18 +52,16 @@ const Payments = () => {
         }
         const response = await fetch(`http://localhost/payments/${id}`, params);
         if (response.status === 200) {
-            const data= await response.json();
-            if(data.code===200){
+            const data = await response.json();
+            if (data.code === 200) {
                 getPayments().then(response => console.log(response));
-            }else if(data.code===453){
+            } else if (data.code === 453) {
                 localStorage.clear();
-                window.href="/login";
-            }else{
+                window.href = "/login";
+            } else {
                 swal("Success", data.message, "success");
-                alert(data.message);
             }
-            
-        }else{
+        } else {
             swal("Error", "An error occurred try again", "error");
         }
     }
@@ -68,7 +73,7 @@ const Payments = () => {
 
     useEffect(() => {
         getPayments().then(() => console.log("getPayments promise resolved"));
-    }, [payments, setPayments])
+    }, [ setPayments])
     return (
         <div className={"flex"}>
             <SideBar />

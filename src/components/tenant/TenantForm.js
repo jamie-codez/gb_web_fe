@@ -8,10 +8,17 @@ const TenantForm = ({tenantData}) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    let verb;
+    if (tenantData) {
+        verb = "PUT";
+    } else {
+        verb = "POST";
+    }
+
     const handleButtonClick = async (e) => {
         e.preventDefault()
         const params = {
-            method: 'POST',
+            method: verb,
             headers: {
                 "access-token": localStorage.getItem("accessToken"),
                 "Content-Type": "application/json"
@@ -21,7 +28,12 @@ const TenantForm = ({tenantData}) => {
                 houseNumber: houseNumber
             })
         };
-        const response = await fetch(`http://localhost/tenants`, params);
+        let response;
+        if(verb==="PUT"){
+            response = await fetch(`http://localhost/tenants/${tenantData._id}`, params);
+        }else{
+            response = await fetch(`http://localhost/tenants`, params);
+        }
         if (response.status === 200) {
             const data = await response.json();
             if (data.code === 453) {
