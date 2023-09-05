@@ -72,7 +72,7 @@ const Payments = () => {
 
     useEffect(() => {
         getPayments().then(() => console.log("getPayments promise resolved"));
-    }, [ payments,getPayments,setPayments])
+    }, [getPayments])
     return (
         <div className={"flex"}>
             <SideBar />

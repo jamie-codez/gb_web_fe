@@ -72,7 +72,7 @@ const Communications = () => {
 
     useEffect(() => {
         getCommunications().then(() => console.log("getCommunication promise resolved"));
-    }, [communications, getCommunications, setCommunications]);
+    }, [getCommunications]);
     
     return (
         <div className={"flex"}>

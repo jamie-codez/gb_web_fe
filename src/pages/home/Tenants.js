@@ -69,7 +69,7 @@ const Tenants = () => {
 
     useEffect(() => {
         getTenants().then(()=>console.log("getTenants promise resolved"));
-    }, [tenants, getTenants,setTenants]);
+    }, [getTenants]);
     return (
         <div className={"flex"}>
             <SideBar />

@@ -55,7 +55,7 @@ const TenantForm = ({tenantData}) => {
             setClientEmail(tenantData.email);
             setHouseNumber(tenantData.houseNumber);
         }
-     },[clientEmail,setClientEmail,houseNumber,setHouseNumber,tenantData]);
+     },[setClientEmail,setHouseNumber,tenantData]);
     return (
         <div className={"account_form mt-10"}>
             <form onSubmit={e => {

@@ -74,7 +74,7 @@ const Users = () => {
     }
     useEffect(() => {
         getUsers().then(() => console.log("getUser promise resolved"));
-    }, [users,getUsers,setUsers]);
+    }, [getUsers]);
     return (
         <div className={"flex"}>
             <SideBar />

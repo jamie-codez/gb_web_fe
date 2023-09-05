@@ -1,18 +1,21 @@
 import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import swal from "sweetalert";
 
-const UserForm = ({ userData }) => {
-    const [username, setUsername] = useState(userData ? userData.username : "");
-    const [email, setEmail] = useState(userData ? userData.email : "");
-    const [firstName, setFirstName] = useState(userData ? userData.firstName : "");
-    const [idNumber, setIdNumber] = useState(userData ? userData.idNumber : "");
-    const [lastName, setLastName] = useState(userData ? userData.lastName : "");
-    const [phone, setPhone] = useState(userData ? userData.phone : "");
-    const [password, setPassword] = useState(userData ? userData.password : "");
+const UserForm = () => {
+    const [userData, setUserData] = useState(null);
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [idNumber, setIdNumber] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const {id} = useParams();
     const [loading, setLoading] = useState(false);
 
     let verb;
-    if (userData) {
+    if (id) {
         verb = "PUT";
     } else {
         verb = "POST";
@@ -63,15 +66,25 @@ const UserForm = ({ userData }) => {
     }
 
     useEffect(()=>{
-        if(userData){
-            setFirstName(userData.firstName);
-            setLastName(userData.lastName);
-            setEmail(userData.email);
-            setPhone(userData.phone);
-            setIdNumber(userData.idNumber);
-            setUsername(userData.username);
+        if (id) {
+            fetch(`http://localhost/users/${id}`, {
+                method: "GET",
+                headers: {
+                    'access-token': localStorage.getItem('accessToken'),
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    setUserData(data.data);
+                    setUsername(data.data.username);
+                    setEmail(data.data.email);
+                    setFirstName(data.data.firstName);
+                    setLastName(data.data.lastName);
+                    setIdNumber(data.data.idNumber);
+                    setPhone(data.data.phone);
+                })
         }
-    },[firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, idNumber.setIdNumber, username, setUsername, userData]);
+    },[id]);
 
     return (
         <div className={"account_form mt-10"}>
@@ -150,7 +163,7 @@ const UserForm = ({ userData }) => {
                     handleSubmit(e).then(result => console.log(result))
                 }}
                         className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
-                    {userData ? "Update" : "Create"}
+                    {id ? "Update" : "Create"}
                 </button>
             </form>
         </div>

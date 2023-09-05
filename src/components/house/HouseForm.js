@@ -1,20 +1,22 @@
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,useParams} from "react-router-dom";
 import swal from "sweetalert";
 
-const HouseForm = ({houseData}) => {
+const HouseForm = () => {
+    const [houseData, setHouseData] = useState(null);
     const [houseNumber, setHouseNumber] = useState("");
     const [rent, setRent] = useState("");
     const [deposit, setDeposit] = useState("");
     const [floor, setFloor] = useState("");
     const [occupied, setOccupied] = useState("");
     const [loading, setLoading] = useState(false);
+    const {id} = useParams();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         let verb;
-        if (houseData) {
+        if (id) {
             verb = "PUT";
         } else {
             verb = "POST";
@@ -59,16 +61,34 @@ const HouseForm = ({houseData}) => {
     }
 
     useEffect(() => {
-        if (houseData) {
-            setHouseNumber(houseData.houseNumber);
-            setRent(houseData.rent);
-            setDeposit(houseData.deposit);
-            setFloor(houseData.floor);
-            setOccupied(houseData.occupied);
+        if(id){
+            const params = {
+                method: 'GET',
+                headers: {
+                    "access-token": localStorage.getItem("accessToken"),
+                    "Content-Type": "application/json"
+                }
+            }
+            fetch(`http://localhost/house/${id}`,params).then(response => response.json()).then(data => {
+                if(data.code===200){
+                    setHouseData(data.payload.data);
+                    setHouseNumber(data.payload.data.houseNumber);
+                    setRent(data.payload.data.rent);
+                    setDeposit(data.payload.data.deposit);
+                    setFloor(data.payload.data.floorNumber);
+                    setOccupied(data.payload.data.occupied);
+                }else if(data.code===453){
+                    localStorage.clear();
+                    window.location.href="/login";
+                }else{
+                    alert(data.message);
+                }
+            })
         }
-    }, [houseData,houseNumber,rent,deposit,floor,occupied, setHouseNumber, setRent, setDeposit, setFloor, setOccupied]);
+    }, [id,setHouseData,setHouseNumber,setRent,setDeposit,setFloor,setOccupied]);
     return (
         <div className={"account_form mt-10"}>
+            <h1 className={"text-2xl font-semibold"}>{id ? "Edit house" : "Add new house"}</h1>
             <form onSubmit={e => {
                 handleSubmit(e).then(response => {
                     swal("Success!", "House has been created successfully!", "success")
@@ -136,7 +156,7 @@ const HouseForm = ({houseData}) => {
                     handleSubmit(e).then(() => console.log("promise resolved"));
                     setLoading(true)
                 }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
-                    {houseData ? "Update" : "Create"}
+                    {id ? "Update" : "Create"}
                 </button>
             </form>
         </div>

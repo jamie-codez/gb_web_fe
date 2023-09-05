@@ -78,7 +78,7 @@ const Houses = () => {
 
     useEffect(() => {
         getHouses().then(() => console.log("getHouses promise resolved"));
-    }, [houses, getHouses, setHouses]);
+    }, [getHouses]);
     return (
         <div className={"flex"}>
             <SideBar />
