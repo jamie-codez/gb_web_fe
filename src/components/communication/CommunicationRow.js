@@ -35,7 +35,7 @@ const CommunicationRow = ({ communication, editCallback, deleteCallback }) => {
                 {getTime(communication.dateCreated)}
             </td>
             <td className="px-6 py-4 flex flex-row items-center justify-center mb-5">
-                <AiOutlineEdit className={"text-blue-500 cursor-pointer w-5 h-5"} onClick={handleEditCallback} />
+                {/* <AiOutlineEdit className={"text-blue-500 cursor-pointer w-5 h-5"} onClick={handleEditCallback} /> */}
                 <AiOutlineDelete className={"ml-5 text-red-500 cursor-pointer w-5 h-5"} onClick={handleDeleteCallback} />
             </td>
         </tr>

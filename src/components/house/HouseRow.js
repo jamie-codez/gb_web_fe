@@ -35,7 +35,7 @@ const HouseRow = ({ index, house, editCallback, deleteCallback }) => {
                 </div>
             </td>
             <td className="px-6 h-full py-4 flex flex-row items-center justify-center">
-                <AiOutlineEdit className={"text-blue-500 cursor-pointer w-5 h-5"} onClick={handleEditCallback} />
+                {/* <AiOutlineEdit className={"text-blue-500 cursor-pointer w-5 h-5"} onClick={handleEditCallback} /> */}
                 <AiOutlineDelete className={"ml-5 text-red-500 cursor-pointer w-5 h-5"} onClick={handleDeleteCallback} />
             </td>
         </tr>
