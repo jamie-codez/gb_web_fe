@@ -41,10 +41,10 @@ const CommunicationForm = () => {
         }
         if (response.status === 200) {
             const data = await response.json();
-            if (data.status === 453) {
+            if (data.code === 453) {
                 setLoading(false);
                 return navigate("/login");
-            } else if (data.status === 200 || data.status === 201) {
+            } else if (data.code === 200 || data.code === 201) {
                 setLoading(false);
                 swal("Success!", "Communication has been created successfully!", "success").then(r => console.log(r));
                 return navigate("/dashboard/communications");
