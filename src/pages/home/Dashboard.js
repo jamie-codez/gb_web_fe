@@ -324,7 +324,7 @@ const Dashboard = ({ auth, ...rest }) => {
                             background={"bg-blue-300"} />
                     </div>
                     <hr className="h-px my-8 ml-10 mr-10 border-0 dark:bg-gray-700" />
-                    <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5"}>
+                    <div className={"stats flex flex-row pb-10 space-x-2 rounded ml-5 mb-[15px]"}>
                         <div className={"users flex flex-col rounded mt-3 w-2/4"}>
                             <h2 className={"bg-white text-xl ml-5 font-bold"}>Users</h2>
                             <UserTable data={users} editCallback={editUser} deleteCallback={deleteUser} />
