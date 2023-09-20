@@ -41,7 +41,7 @@ const Payments = () => {
             setPayments([]);
         }
     },[setPayments]);
-    
+
     const handleDeletePayment = async (id) => {
         const params = {
             method: 'DELETE',
@@ -89,7 +89,10 @@ const Payments = () => {
                         <PaymentTable data={payments} deleteCallback={handleDeletePayment} />
                     </div>
                 </div>
-                <div className={"align-baseline"}>
+                {/* <div className={"align-baseline"}>
+                    <Footer />
+                </div> */}
+                <div className="fixed bottom-0 left-0 z-20 w-full">
                     <Footer />
                 </div>
             </div>

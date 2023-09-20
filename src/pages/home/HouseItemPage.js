@@ -21,7 +21,7 @@ const HouseItemPage = () => {
                 <div className={"h-full mr-10 ml-10 mt-20"}>
                     <HouseForm id={id}/>
                 </div>
-                <div className={"align-baseline"}>
+                <div className="fixed bottom-0 left-0 z-20 w-full">
                     <Footer />
                 </div>
             </div>

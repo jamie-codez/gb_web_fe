@@ -85,7 +85,7 @@ const Tasks = () => {
                         <TaskTable data={tasks} editCallback={handleEditCallback} deleteCallback={handleDeleteCallback} />
                     </div>
                 </div>
-                <div className={"align-baseline"}>
+                <div className="fixed bottom-0 left-0 z-20 w-full">
                     <Footer />
                 </div>
             </div>

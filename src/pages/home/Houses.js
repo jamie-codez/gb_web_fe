@@ -90,7 +90,7 @@ const Houses = () => {
                         <HouseTable data={houses} editCallback={handleEditHouse} deleteCallback={handleDeleteHouse} />
                     </div>
                 </div>
-                <div className={"align-baseline"}>
+                <div className="fixed bottom-0 left-0 z-20 w-full">
                     <Footer />
                 </div>
             </div>

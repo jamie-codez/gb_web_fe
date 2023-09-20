@@ -15,8 +15,8 @@ const Settings = () => {
                         <h1>Thank you for being patient🙂</h1>
                     </div>
                 </div>
-                <div className={"align-baseline bg-gray-300"}>
-                    <Footer/>
+                <div className="fixed bottom-0 left-0 z-20 w-full">
+                    <Footer />
                 </div>
             </div>
         </div>
