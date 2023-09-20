@@ -40,7 +40,8 @@ const Payments = () => {
         } else {
             setPayments([]);
         }
-    },[setPayments])
+    },[setPayments]);
+    
     const handleDeletePayment = async (id) => {
         const params = {
             method: 'DELETE',

@@ -6,8 +6,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
-
-
 const Houses = () => {
     const [houses, setHouses] = useState([]);
     const navigate = useNavigate();
@@ -54,7 +52,7 @@ const Houses = () => {
                 "Content-Type": "application/json"
             }
         }
-        const response = await fetch(`http://localhost/payments/${id}`, params);
+        const response = await fetch(`http://localhost/house/${id}`, params);
         if (response.status === 200) {
             const data = await response.json();
             if (data.code === 200) {

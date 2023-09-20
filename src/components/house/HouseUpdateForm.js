@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import swal from "sweetalert";
 
-const HouseForm = ({id}) => {
+const HouseForm = ({house,onSubmit}) => {
     const [houseNumber, setHouseNumber] = useState("");
     const [rent, setRent] = useState("");
     const [deposit, setDeposit] = useState("");
@@ -11,108 +11,21 @@ const HouseForm = ({id}) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        let verb;
-        if (id) {
-            verb = "PUT";
-        } else {
-            verb = "POST";
-        }
-        const params = {
-            method: verb,
-            headers: {
-                "access-token": localStorage.getItem("accessToken"),
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                houseNumber: houseNumber.toUpperCase(),
-                rent: rent,
-                deposit: deposit,
-                floorNumber: floor,
-                occupied: occupied
-            })
-        };
-        let url;
-        if (id) {
-            url = `http://localhost/houses/${id}`;
-        } else {
-            url = `http://localhost/houses`;
-        }
-        const response = await fetch(url, params);
-        if (response.status === 200) {
-            const data = await response.json();
-            if (data.status === 453) {
-                return navigate("/login");
-            }else if(data.code===201 || data.code===200){
-                swal("Success!", "House has been created successfully!", "success").then(r => console.log(r))
-                setLoading(false);
-                navigate("/dashboard/houses");
-            }else{
-                swal("Error!", data.message, "error").then(r => console.log(r))
-                setLoading(false);
-            }
-        } else {
-            alert("An error occurred try again");
-            setLoading(false);
-        }
+    const handleSelect =(e)=>{
+
     }
 
-    const handleSelect = (e) => {
-        if (e.target.value === "true") {
-            setOccupied(true);
-            return;
-        }
-        setOccupied(false);
+    const handleSubmit = (e)=>{
+
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const getHouse = async (id,) => {
-        const params = {
-            method: 'GET',
-            headers: {
-                'access-token': localStorage.getItem('accessToken'),
-                'Content-Type': 'application/json'
-            }
-        }
-        const response = await fetch(`http://localhost/house/${id}`, params);
-        if (response.status === 200) {
-            const data = await response.json();
-            if (data.status === 453) {
-                localStorage.clear();
-                return navigate("/login");
-            } else if (data.status === 200) {
-                const payload = data.payload
-                setHouseNumber(payload.houseNumber)
-                setRent(payload.rent)
-                setDeposit(payload.deposit)
-                setFloor(payload.floorNumber)
-                setOccupied(payload.occupied)
-            } else {
-                setHouseNumber("")
-                setRent("")
-                setDeposit("")
-                setFloor("")
-                setOccupied(false)
-            }
-        } else {
-            setHouseNumber("")
-            setRent("")
-            setDeposit("")
-            setFloor("")
-            setOccupied(false)
-        }
-    }
 
     useEffect(() => {
-        if (id) {
-            getHouse(id).then(r => console.log(r));
-        }
-    }, [getHouse, id]);
+
+    }, []);
     return (
         <div className={"account_form mt-10"}>
-            <h1 className={"text-2xl font-semibold"}>{id ? "Edit house" : "Add new house"}</h1>
-            <p>{id}</p>
+            <h1 className={"text-2xl font-semibold"}>{"Edit house"}</h1>
             <form onSubmit={e => {
                 handleSubmit(e).then(response => {
                     swal("Success!", "House has been created successfully!", "success")
@@ -175,8 +88,7 @@ const HouseForm = ({id}) => {
                 <button type="submit" onClick={e => {
                     handleSubmit(e).then(() => console.log("promise resolved"));
                     setLoading(true)
-                }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
-                    {id ? "Update" : "Create"}
+                }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>{"Update"}
                 </button>
             </form>
         </div>
