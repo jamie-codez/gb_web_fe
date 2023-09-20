@@ -72,12 +72,12 @@ const Footer = () => {
           </Link>
         </li>
         <li>
-          <Link to="#" class="mr-4 hover:underline md:mr-6">
+          <Link to="/" class="mr-4 hover:underline md:mr-6">
             Licensing
           </Link>
         </li>
         <li>
-          <Link to="#" class="hover:underline">
+          <Link to="/" class="hover:underline">
             Contact
           </Link>
         </li>
