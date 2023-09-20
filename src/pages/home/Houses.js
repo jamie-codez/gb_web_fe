@@ -52,7 +52,7 @@ const Houses = () => {
                 "Content-Type": "application/json"
             }
         }
-        const response = await fetch(`http://localhost/house/${id}`, params);
+        const response = await fetch(`http://localhost/houses/${id}`, params);
         if (response.status === 200) {
             const data = await response.json();
             if (data.code === 200) {
@@ -65,7 +65,7 @@ const Houses = () => {
             }
 
         } else {
-            alert("Error deleting user");
+            alert("Error deleting house");
         }
     }
 

@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 
 
-const CommunicationForm = ({ data }) => {
-    const [to, setTo] = useState(data ? data.to : "");
-    const [title, setTitle] = useState(data ? data.title : "");
-    const [description, setDescription] = useState(data ? data.description : "");
+const CommunicationForm = () => {
+    const [to, setTo] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const navigate = useNavigate();
+    const {id} = useParams();
     const [loading, setLoading] = useState(false);
 
     let verb;
-    if (data) {
+    if (id) {
         verb = "PUT";
     } else {
         verb = "POST";
@@ -34,7 +35,7 @@ const CommunicationForm = ({ data }) => {
         };
         let response;
         if (verb === "PUT") {
-            response = await fetch(`http://localhost/communications/${data._id}`, params);
+            response = await fetch(`http://localhost/communications/${id}`, params);
         } else {
             response = await fetch(`http://localhost/communications`, params);
         }
@@ -86,7 +87,7 @@ const CommunicationForm = ({ data }) => {
                 <button type="submit" onClick={e => {
                     handleSubmit(e).then(() => console.log("Submit clicked"));
                 }} className={`flex w-full btn justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "cursor-not-allowed opacity-25" : ""}`}>
-                    {data ? "Update" : "Create"}
+                    {id ? "Update" : "Create"}
                 </button>
             </form>
         </div>
