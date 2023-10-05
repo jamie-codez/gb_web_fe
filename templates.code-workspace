@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../Work/templates"
+		},
+		{
+			"name": "oled",
+			"path": "../../../../Documents/PlatformIO/Projects/oled"
+		},
+		{
+			"name": "lcd",
+			"path": "../../IoT/lcd_test/lcd"
+		}
+	],
+	"settings": {}
+}

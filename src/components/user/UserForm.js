@@ -49,7 +49,7 @@ const UserForm = () => {
         if (response.status === 200) {
             const jsonData = await response.json();
             if (jsonData.code === 200 || jsonData.code === 201) {
-                swal("Success", jsonData.message, "success", {
+                swal("Success", "User created successfully.", "success", {
                     buttons: false,
                     timer: 2000
                 }).then(() => {
