@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ProfileCard = (user) => {
+const ProfileCard = ({user}) => {
   const [formData, setFormData] = useState({
     firstName: user.firstName,
     middleName: user.middleName,
