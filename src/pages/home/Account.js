@@ -2,6 +2,7 @@ import SideBar from "../../components/navigation/SideBar";
 import NavHeader from "../../components/navigation/NavHeader";
 import Footer from "../../components/navigation/Footer";
 import UserForm from "../../components/user/UserForm";
+import UserProfile from "../../components/user/UserProfile";
 import "../../index.css"
 import {useCallback, useEffect, useState} from "react";
 import {useParams,useNavigate} from "react-router-dom";
@@ -49,7 +50,7 @@ const Account = () => {
             <div className={"flex flex-col w-full h-screen max-h-full"}>
                 <NavHeader />
                 <div className={"h-full mr-10 ml-10 mt-20"}>
-                    <UserForm userData={user} />
+                    <UserProfile userData={user} />
                 </div>
                 <div className="fixed bottom-0 left-0 z-20 w-full">
                     <Footer />
