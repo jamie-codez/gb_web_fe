@@ -57,7 +57,7 @@ const UserForm = () => {
                 });
                 return;
             }
-            alert("User creation failed, try again");
+            // alert("User creation failed, try again");
             setLoading(false);
         } else {
             alert("User creation failed, try again");
