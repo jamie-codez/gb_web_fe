@@ -18,6 +18,7 @@ import TenantItemPage from "./pages/home/TenantItemPage";
 import CommunicationItemPage from "./pages/home/CommunicationItemPage";
 import TaskItemPage from "./pages/home/TaskItemPage";
 import PaymentItemPage from "./pages/home/PaymentItemPage";
+import AddUser from "./components/user/AddUser";
 
 
 const ProtectedRoute = ({isLoggedIn, children}) => {
@@ -47,7 +48,7 @@ function App() {
                 <Route path={"users"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Users/></ProtectedRoute>}/>
                     <Route path={":id"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Account/></ProtectedRoute>}/>
-                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Account/></ProtectedRoute>}/>
+                    <Route path={"new"} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <AddUser/></ProtectedRoute>}/>
                 </Route>
                 <Route path={"houses"}>
                     <Route index={true} element={<ProtectedRoute isLoggedIn={isLoggedIn}> <Houses/></ProtectedRoute>}/>
